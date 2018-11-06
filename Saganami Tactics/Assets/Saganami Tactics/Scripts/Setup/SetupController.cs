@@ -116,6 +116,7 @@ namespace ST
                 var ship = PhotonNetwork.Instantiate(shipPrefabName, Vector3.zero, Quaternion.identity).GetComponent<Ship>();
                 ship.SSDName = data.SSD.name;
                 ship.Name = data.ShipName;
+                PlaceShip(ship);
 
                 var entry = Instantiate(shipsListEntryPrefab).GetComponent<ShipsListEntry>();
                 entry.Ship = ship;
@@ -132,6 +133,48 @@ namespace ST
                 totalCostText.color = Color.red;
                 StartCoroutine(FlashTotalCost());
             }
+        }
+
+        private void PlaceShip(Ship ship)
+        {
+            var deployPoint = GameSettings.GetDeploymentCenterPoint(PhotonNetwork.LocalPlayer.GetColorIndex());
+            var offsetAxis = deployPoint.x != 0 ? Vector3.forward : Vector3.right;
+            var offsetDir = 1;
+            var offsetAmount = 0;
+            var occupied = true;
+            Vector3 point = deployPoint;
+
+            while (occupied)
+            {
+                point = deployPoint + offsetAxis * offsetDir * offsetAmount;
+                if (IsShipAtPoint(point))
+                {
+                    if (offsetDir == -1)
+                    {
+                        offsetDir = 1;
+                        offsetAmount++;
+                    }
+                    else
+                    {
+                        offsetDir = -1;
+                    }
+                }
+                else
+                {
+                    occupied = false;
+                }
+            }
+
+            var rotation = Quaternion.LookRotation(point * -1, Vector3.up);
+            ship.transform.position = point;
+            ship.transform.rotation = rotation;
+        }
+
+        private bool IsShipAtPoint(Vector3 point)
+        {
+            return PhotonNetwork
+                .FindGameObjectsWithComponent(typeof(Ship))
+                .Any(ship => ship.transform.position == point);
         }
 
         private IEnumerator FlashTotalCost()

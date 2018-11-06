@@ -31,6 +31,18 @@ namespace ST
                 default: return Color.white;
             }
         }
+
+        public static Vector3 GetDeploymentCenterPoint(int colorIndex)
+        {
+            switch (colorIndex)
+            {
+                case 0: return new Vector3(-30, 0, 0);
+                case 1: return new Vector3(30, 0, 0);
+                case 2: return new Vector3(0, 0, -30);
+                case 3: return new Vector3(0, 0, 30);
+                default: return Vector3.zero;
+            }
+        }
         #endregion
     }
 }
