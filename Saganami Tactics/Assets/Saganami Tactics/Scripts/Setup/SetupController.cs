@@ -165,7 +165,7 @@ namespace ST
                 }
             }
 
-            var rotation = Quaternion.LookRotation(point * -1, Vector3.up);
+            var rotation = Quaternion.LookRotation(deployPoint * -1, Vector3.up);
             ship.transform.position = point;
             ship.transform.rotation = rotation;
         }
