@@ -31,7 +31,7 @@ namespace ST
             var roomName = gameNameField.text;
 
             Hashtable properties = new Hashtable();
-            properties.Add(GameSettings.MaxPointsProp, (byte)maxPointsSlider.value);
+            properties.Add(GameSettings.MaxPointsProp, (int)maxPointsSlider.value);
 
             PhotonNetwork.CreateRoom(roomName, new RoomOptions()
             {

@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f27ca1c06f9d0e5408712c9654cf3895, type: 3}
+  m_Name: PN_CL_Conqueror
+  m_EditorClassIdentifier: 
+  ClassName: Conqueror
+  Category: {fileID: 11400000, guid: 7b913bfa81d2fab49aa0628f2c414adb, type: 2}
+  Faction: {fileID: 11400000, guid: b4d2986edfcbf6242bdaca13fc95e778, type: 2}
+  SampleNames:
+  - PNS Alexander
+  - PNS Alvarado
+  - PNS Babar
+  - PNS Caesar
+  - "PNS Cort\xE9s"
+  - PNS Diaz
+  - PNS Khan
+  - PNS Hannibal
+  - PNS Hideyoshi
+  - PNS Huangdi
+  - PNS Montezuma
+  - PNS Napoleon
+  - PNS Ramses
+  - PNS Valdivia
+  - PNS Vaubon
+  - PNS Wari
+  - PNS William
+  BaseCost: 42

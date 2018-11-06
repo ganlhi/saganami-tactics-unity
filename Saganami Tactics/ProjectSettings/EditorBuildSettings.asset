@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Saganami Tactics/Scenes/Setup.unity
     guid: c5ce6dad893ffe84aabcaec5f78ce7d7
+  - enabled: 1
+    path: Assets/Saganami Tactics/Scenes/Play.unity
+    guid: bfb336af12bdb614f84f17aeb9a3aff1
   m_configObjects: {}

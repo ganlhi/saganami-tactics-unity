@@ -1,5 +1,8 @@
 ﻿using ExitGames.Client.Photon;
+using Photon.Pun;
 using Photon.Realtime;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace ST
 {
@@ -42,9 +45,26 @@ namespace ST
         public static void ToggleReady(this Player player)
         {
             var newReady = !player.IsReady();
+            player.SetReady(newReady);
+        }
+
+        public static void SetReady(this Player player, bool ready = true)
+        {
             player.SetCustomProperties(new Hashtable() {
-                { GameSettings.ReadyProp, newReady },
+                { GameSettings.ReadyProp, ready },
             });
+        }
+
+        public static List<Ship> GetShips(this Player player)
+        {
+            return PhotonNetwork
+                .FindGameObjectsWithComponent(typeof(Ship))
+                .Select(go => go.GetComponent<Ship>())
+                .Where(ship =>
+                {
+                    return ship.PV != null && ship.PV.Owner == player;
+                })
+                .ToList();
         }
     }
 
@@ -58,6 +78,17 @@ namespace ST
                 return (int)points;
             }
             return 0;
+        }
+    }
+
+    public static class RoomExtensions
+    {
+        public static void ResetPlayersReadiness(this Room room)
+        {
+            foreach (Player p in room.Players.Values)
+            {
+                p.SetReady(false);
+            }
         }
     }
 }

@@ -56,7 +56,7 @@ namespace ST
                 var entry = child.GetComponent<PlayerListEntry>();
                 if (entry.Player == target)
                 {
-                    entry.UpdateUi();
+                    entry.UpdateUi(false);
                     break;
                 }
             }
@@ -92,6 +92,7 @@ namespace ST
 
             if (PhotonNetwork.CurrentRoom.Players.Values.All(p => p.IsReady()))
             {
+                PhotonNetwork.CurrentRoom.ResetPlayersReadiness();
                 PhotonNetwork.LoadLevel(GameSettings.SceneSetup);
             }
         }

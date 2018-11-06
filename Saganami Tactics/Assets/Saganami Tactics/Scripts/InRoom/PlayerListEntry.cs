@@ -11,6 +11,9 @@ namespace ST
         private TMP_InputField nicknameInput;
 
         [SerializeField]
+        private Image nicknameInputValid;
+
+        [SerializeField]
         private TMP_Text nicknameLabel;
 
         [SerializeField]
@@ -69,13 +72,19 @@ namespace ST
             }
         }
 
-        public void UpdateUi()
+        public void UpdateUi(bool resetNameInput = true)
         {
             colorButton.GetComponent<Image>().color = GameSettings.GetColor(Player.GetColorIndex());
-            nicknameInput.text = Player.NickName;
+            if (resetNameInput)
+            {
+                nicknameInput.text = Player.NickName;
+            }
+            nicknameInputValid.gameObject.SetActive(
+                !string.IsNullOrEmpty(Player.NickName) && nicknameInput.text == Player.NickName
+                );
             nicknameLabel.text = Player.NickName;
             readyImage.sprite = Player.IsReady() ? readyIcon : notReadyIcon;
-            readyButton.interactable = !string.IsNullOrEmpty(Player.NickName);
+            readyButton.interactable = !string.IsNullOrEmpty(Player.NickName) && Player.GetColorIndex() >= 0;
         }
     }
 }

@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f27ca1c06f9d0e5408712c9654cf3895, type: 3}
+  m_Name: RMN_CL_Courageous
+  m_EditorClassIdentifier: 
+  ClassName: Courageous
+  Category: {fileID: 11400000, guid: 7b913bfa81d2fab49aa0628f2c414adb, type: 2}
+  Faction: {fileID: 11400000, guid: d0de7666122b351458be20e63dd967be, type: 2}
+  SampleNames:
+  - HMS Audacious
+  - HMS Courageous
+  - HMS Fearless
+  - HMS Intransigent
+  - HMS Intrepid
+  - HMS Resolute
+  - HMS Valiant
+  BaseCost: 35
