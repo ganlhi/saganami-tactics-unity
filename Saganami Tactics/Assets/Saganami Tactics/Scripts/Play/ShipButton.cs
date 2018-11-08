@@ -22,7 +22,7 @@ namespace ST
 
         private void Start()
         {
-            colorCorner.color = GameSettings.GetColor(Ship.PV.Owner.GetColorIndex());
+            colorCorner.color = GameSettings.GetColor(Ship.photonView.Owner.GetColorIndex());
             shipName.text = Ship.Name;
 
             focusButton.onClick.AddListener(() =>

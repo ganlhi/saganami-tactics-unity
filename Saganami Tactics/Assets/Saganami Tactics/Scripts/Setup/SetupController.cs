@@ -30,9 +30,6 @@ namespace ST
         private TMP_Text totalCostText;
 
         [SerializeField]
-        private string shipPrefabName;
-
-        [SerializeField]
         private Button readyButton;
 
         [SerializeField]
@@ -113,7 +110,7 @@ namespace ST
                 // Create the ship
                 Debug.LogFormat("<color=green>Create ship</color> {0} [{1}]", data.ShipName, data.SSD.ClassName);
 
-                var ship = PhotonNetwork.Instantiate(shipPrefabName, Vector3.zero, Quaternion.identity).GetComponent<Ship>();
+                var ship = PhotonNetwork.Instantiate("Prefabs/Ship", Vector3.zero, Quaternion.identity).GetComponent<Ship>();
                 ship.SSDName = data.SSD.name;
                 ship.Name = data.ShipName;
                 PlaceShip(ship);
@@ -168,6 +165,8 @@ namespace ST
             var rotation = Quaternion.LookRotation(deployPoint * -1, Vector3.up);
             ship.transform.position = point;
             ship.transform.rotation = rotation;
+
+            ship.Velocity = ship.transform.forward * 4;
         }
 
         private bool IsShipAtPoint(Vector3 point)

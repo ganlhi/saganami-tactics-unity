@@ -62,7 +62,7 @@ namespace ST
                 .Select(go => go.GetComponent<Ship>())
                 .Where(ship =>
                 {
-                    return ship.PV != null && ship.PV.Owner == player;
+                    return ship.photonView != null && ship.photonView.Owner == player;
                 })
                 .ToList();
         }
