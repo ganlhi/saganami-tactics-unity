@@ -12,11 +12,14 @@ namespace ST
     public class PlayController : MonoBehaviourPunCallbacks
     {
         #region Editor customization
+
         [SerializeField]
         private Moba_Camera cameraController;
-        #endregion
+
+        #endregion Editor customization
 
         #region Public variables
+
         public UnityEvent OnStepEnd = new UnityEvent();
         public UnityEvent OnStepStart = new UnityEvent();
         public static PlayController Instance { get; private set; }
@@ -24,9 +27,11 @@ namespace ST
         public Ship SelectedShip { get; private set; }
         public TurnStep Step { get; private set; }
         public int Turn { get; private set; }
-        #endregion
+
+        #endregion Public variables
 
         #region Public methods
+
         public List<ShipMarker> GetAllShipMarkers()
         {
             return PhotonNetwork
@@ -61,9 +66,11 @@ namespace ST
                 cameraController.settings.cameraLocked = false;
             }
         }
-        #endregion
+
+        #endregion Public methods
 
         #region Private methods
+
         private void FocusOnPlayerShip()
         {
             var ship = PhotonNetwork.LocalPlayer.GetShips()[0];
@@ -82,6 +89,7 @@ namespace ST
 
         private void NextStep()
         {
+            PhotonNetwork.CurrentRoom.ResetPlayersReadiness();
             var step = Step.Next();
             var turn = step == TurnStep.Start ? Turn + 1 : Turn;
             photonView.RPC("RPC_SetStep", RpcTarget.All, turn, step);
@@ -101,10 +109,12 @@ namespace ST
                 case TurnStep.Start:
                     PhotonNetwork.LocalPlayer.GetShips().ForEach(s => s.PlaceMarkers());
                     break;
+
                 case TurnStep.HalfMove:
                 case TurnStep.FullMove:
                     MakeShipsMove();
                     break;
+
                 default:
                     break;
             }
@@ -123,6 +133,7 @@ namespace ST
             Step = step;
             OnStartStep();
         }
+
         private IEnumerator WaitForShipsToFinishMoving(List<Ship> ships)
         {
             ships.ForEach(s => s.AutoMove());
@@ -134,9 +145,11 @@ namespace ST
 
             PhotonNetwork.LocalPlayer.SetReady();
         }
-        #endregion
+
+        #endregion Private methods
 
         #region Unity callbacks
+
         private void Awake()
         {
             Instance = this;
@@ -152,9 +165,11 @@ namespace ST
                 photonView.RPC("RPC_SetStep", RpcTarget.All, 1, TurnStep.Start);
             }
         }
-        #endregion
+
+        #endregion Unity callbacks
 
         #region Photon callbacks
+
         public override void OnPlayerPropertiesUpdate(Player target, Hashtable changedProps)
         {
             if (PhotonNetwork.IsMasterClient)
@@ -165,6 +180,7 @@ namespace ST
                 }
             }
         }
-        #endregion        
+
+        #endregion Photon callbacks
     }
 }
