@@ -102,6 +102,10 @@ namespace ST
                 case TurnStep.Start:
                     PhotonNetwork.LocalPlayer.GetShips().ForEach(s => s.PlaceMarkers());
                     break;
+                case TurnStep.HalfMove:
+                case TurnStep.FullMove:
+                    MakeShipsMove();
+                    break;
                 default:
                     break;
             }
@@ -130,6 +134,14 @@ namespace ST
             var step = Step.Next();
             var turn = step == TurnStep.Start ? Turn + 1 : Turn;
             photonView.RPC("RPC_SetStep", RpcTarget.All, turn, step);
+        }
+
+        private void MakeShipsMove()
+        {
+            if (PhotonNetwork.IsMasterClient)
+            {
+                GetAllShips().ForEach(s => s.AutoMove());
+            }
         }
     }
 }

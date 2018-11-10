@@ -33,4 +33,5 @@ MonoBehaviour:
   - RespawnSpaceship
   - SetStep
   - RPC_SetStep
+  - RPC_AutoMove
   DisableAutoOpenWizard: 1
