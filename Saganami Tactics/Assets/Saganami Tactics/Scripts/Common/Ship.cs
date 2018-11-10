@@ -14,10 +14,6 @@ namespace ST
         private LineRenderer VectorLine;
         #endregion
 
-        #region Constants
-        private static readonly float MarkerMinDistance = .1f;
-        #endregion
-
         #region Public variables
         public ShipSSD SSD { get; private set; }
         public string SSDName;
@@ -79,8 +75,16 @@ namespace ST
 
         private void Update()
         {
-            VectorLine.SetPosition(0, transform.position);
-            VectorLine.SetPosition(1, EndMarker.transform.position);
+            if (endMarkerViewId != -1)
+            {
+                VectorLine.enabled = true;
+                VectorLine.SetPosition(0, transform.position);
+                VectorLine.SetPosition(1, EndMarker.transform.position);
+            }
+            else
+            {
+                VectorLine.enabled = false;
+            }
         }
         #endregion
 
@@ -112,6 +116,24 @@ namespace ST
             PlaceMarker(MiddleMarker, .5f);
             PlaceMarker(EndMarker);
         }
+
+        public void AutoMove()
+        {
+            ShipMarker marker;
+            switch (PlayController.Instance.Step)
+            {
+                case TurnStep.HalfMove:
+                    marker = MiddleMarker;
+                    break;
+                case TurnStep.FullMove:
+                    marker = EndMarker;
+                    break;
+                default:
+                    return;
+            }
+
+            StartCoroutine(MoveToMarker(marker));
+        }
         #endregion
 
         #region Private methods
@@ -120,7 +142,7 @@ namespace ST
             marker.transform.position = transform.position + velocityMult * Velocity;
             marker.transform.rotation = transform.rotation;
 
-            marker.gameObject.SetActive(transform.position.DistanceTo(marker.transform.position) >= MarkerMinDistance);
+            marker.SetActive(transform.position != marker.transform.position);
 
             // TODO Remove when plotting implemented
             marker.transform.rotation *= Quaternion.AngleAxis(velocityMult * 60, Vector3.right) * Quaternion.AngleAxis(velocityMult * 30, Vector3.forward);
@@ -143,28 +165,12 @@ namespace ST
 
             marker = PhotonNetwork.Instantiate("Prefabs/ShipMarker", transform.position, transform.rotation)
                 .GetComponent<ShipMarker>();
+
             marker.ShipViewId = photonView.ViewID;
-            marker.gameObject.SetActive(false);
+
+            marker.SetActive(false);
 
             return marker;
-        }
-
-        public void AutoMove()
-        {
-            ShipMarker marker;
-            switch (PlayController.Instance.Step)
-            {
-                case TurnStep.HalfMove:
-                    marker = MiddleMarker;
-                    break;
-                case TurnStep.FullMove:
-                    marker = EndMarker;
-                    break;
-                default:
-                    return;
-            }
-
-            StartCoroutine(MoveToMarker(marker));
         }
 
         private IEnumerator MoveToMarker(ShipMarker marker)
@@ -188,7 +194,7 @@ namespace ST
                 yield return null;
             }
 
-            marker.gameObject.SetActive(false);
+            marker.SetActive(false);
             IsMoving = false;
         }
         #endregion

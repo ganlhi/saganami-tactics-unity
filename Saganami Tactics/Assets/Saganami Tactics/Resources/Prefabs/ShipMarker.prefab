@@ -452,7 +452,7 @@ MonoBehaviour:
   - {fileID: 114920061178989986}
   - {fileID: 114829438284651326}
   viewIdField: 0
-  InstantiationId: 1
+  InstantiationId: 2
   isRuntimeInstantiated: 0
 --- !u!114 &114829438284651326
 MonoBehaviour:
@@ -467,6 +467,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   forLocalPlayer: {fileID: 1955490164835214}
   forDistantPlayer: {fileID: 1418584730687714}
+  forDistantPlayerMesh: {fileID: 23909512632631554}
   ShipViewId: -1
 --- !u!114 &114920061178989986
 MonoBehaviour:

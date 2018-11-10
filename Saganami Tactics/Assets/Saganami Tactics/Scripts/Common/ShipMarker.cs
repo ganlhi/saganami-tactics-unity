@@ -8,12 +8,18 @@ namespace ST
     [RequireComponent(typeof(PhotonTransformView))]
     public class ShipMarker : MonoBehaviourPun, IPunObservable
     {
+        #region Editor customization
         [SerializeField]
         private GameObject forLocalPlayer;
 
         [SerializeField]
         private GameObject forDistantPlayer;
 
+        [SerializeField]
+        private MeshRenderer forDistantPlayerMesh;
+        #endregion   
+
+        #region Public variables
         public int ShipViewId = -1;
 
         public Ship Ship
@@ -29,7 +35,18 @@ namespace ST
                     .First(s => s.photonView.ViewID == ShipViewId);
             }
         }
+        #endregion
 
+        #region Unity callbacks
+        private void Start()
+        {
+            forLocalPlayer.SetActive(photonView.IsMine);
+            forDistantPlayer.SetActive(!photonView.IsMine);
+            forDistantPlayerMesh.material.color = GameSettings.GetColor(photonView.Owner.GetColorIndex());
+        }
+        #endregion
+
+        #region Photon callbacks
         public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
         {
             if (stream.IsWriting)
@@ -43,11 +60,21 @@ namespace ST
                 ShipViewId = (int)stream.ReceiveNext();
             }
         }
+        #endregion
 
-        private void Start()
+        #region Public methods
+        public void SetActive(bool active)
         {
-            forLocalPlayer.SetActive(photonView.IsMine);
-            forDistantPlayer.SetActive(!photonView.IsMine);
+            photonView.RPC("RPC_SetActive", RpcTarget.All, active);
         }
+        #endregion
+
+        #region Private methods
+        [PunRPC]
+        private void RPC_SetActive(bool active)
+        {
+            gameObject.SetActive(active);
+        }
+        #endregion
     }
 }
