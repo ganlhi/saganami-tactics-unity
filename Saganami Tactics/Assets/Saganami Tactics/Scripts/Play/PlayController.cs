@@ -50,6 +50,7 @@ namespace ST
 
         public void SelectShip(Ship ship)
         {
+            Debug.Log("Select ship: " + ship.Name);
             SelectedShip = ship;
         }
 
@@ -134,6 +135,22 @@ namespace ST
             OnStartStep();
         }
 
+        private void TrySelectShip()
+        {
+            var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit))
+            {
+                var go = hit.transform.gameObject;
+                var ship = go.GetComponent<Ship>();
+                if (ship != null)
+                {
+                    SelectShip(ship);
+                }
+            }
+        }
+
         private IEnumerator WaitForShipsToFinishMoving(List<Ship> ships)
         {
             ships.ForEach(s => s.AutoMove());
@@ -163,6 +180,14 @@ namespace ST
             if (PhotonNetwork.IsMasterClient)
             {
                 photonView.RPC("RPC_SetStep", RpcTarget.All, 1, TurnStep.Start);
+            }
+        }
+
+        private void Update()
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                TrySelectShip();
             }
         }
 

@@ -6,19 +6,29 @@ namespace ST
 {
     public class ShipButton : MonoBehaviour
     {
+        #region Public variables
+
         public Ship Ship;
 
-        [SerializeField]
-        private TMP_Text shipName;
+        #endregion Public variables
+
+        #region Editor customization
 
         [SerializeField]
         private Image colorCorner;
 
         [SerializeField]
+        private Button focusButton;
+
+        [SerializeField]
         private Button mainButton;
 
         [SerializeField]
-        private Button focusButton;
+        private TMP_Text shipName;
+
+        #endregion Editor customization
+
+        #region Unity callbacks
 
         private void Start()
         {
@@ -35,5 +45,7 @@ namespace ST
                 PlayController.Instance.SelectShip(Ship);
             });
         }
+
+        #endregion Unity callbacks
     }
 }

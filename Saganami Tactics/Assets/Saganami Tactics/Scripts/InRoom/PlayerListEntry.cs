@@ -7,6 +7,14 @@ namespace ST
 {
     public class PlayerListEntry : MonoBehaviour
     {
+        #region Private Constants
+
+        private const string playerNamePrefKey = "PlayerName";
+
+        #endregion Private Constants
+
+        #region Editor customization
+
         [SerializeField]
         private TMP_InputField nicknameInput;
 
@@ -40,12 +48,36 @@ namespace ST
         [SerializeField]
         private Sprite readyIcon;
 
+        #endregion Editor customization
+
+        #region Public variables
+
         public Player Player;
+
+        #endregion Public variables
+
+        #region Unity callbacks
 
         private void Start()
         {
+            LoadSavedPlayerName();
             SetupUi();
             UpdateUi();
+        }
+
+        #endregion Unity callbacks
+
+        #region Private methods
+
+        private void LoadSavedPlayerName()
+        {
+            if (Player.IsLocal)
+            {
+                if (PlayerPrefs.HasKey(playerNamePrefKey))
+                {
+                    Player.NickName = PlayerPrefs.GetString(playerNamePrefKey);
+                }
+            }
         }
 
         private void SetupUi()
@@ -58,7 +90,11 @@ namespace ST
 
             if (Player.IsLocal)
             {
-                nicknameInput.onSubmit.AddListener(name => { Player.NickName = name; });
+                nicknameInput.onValueChanged.AddListener(name =>
+                {
+                    Player.NickName = name;
+                    PlayerPrefs.SetString(playerNamePrefKey, name);
+                });
 
                 readyButton.onClick.AddListener(() =>
                 {
@@ -71,6 +107,10 @@ namespace ST
                 });
             }
         }
+
+        #endregion Private methods
+
+        #region Public methods
 
         public void UpdateUi(bool resetNameInput = true)
         {
@@ -86,5 +126,7 @@ namespace ST
             readyImage.sprite = Player.IsReady() ? readyIcon : notReadyIcon;
             readyButton.interactable = !string.IsNullOrEmpty(Player.NickName) && Player.GetColorIndex() >= 0;
         }
+
+        #endregion Public methods
     }
 }
