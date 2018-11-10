@@ -1,7 +1,10 @@
-﻿using Photon.Pun;
+﻿using ExitGames.Client.Photon;
+using Photon.Pun;
+using Photon.Realtime;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace ST
 {
@@ -14,10 +17,11 @@ namespace ST
         public int Turn { get; private set; }
         public TurnStep Step { get; private set; }
 
+        public UnityEvent OnStepEnd = new UnityEvent();
+        public UnityEvent OnStepStart = new UnityEvent();
+
         [SerializeField]
         private Moba_Camera cameraController;
-
-        private PhotonView PV;
 
         private void Awake()
         {
@@ -26,14 +30,12 @@ namespace ST
 
         private void Start()
         {
-            PV = GetComponent<PhotonView>();
-
             FocusOnPlayerShip();
 
             // Start first turn
             if (PhotonNetwork.IsMasterClient)
             {
-                PV.RPC("SetStep", RpcTarget.All, 1, TurnStep.Start, true);
+                photonView.RPC("RPC_SetStep", RpcTarget.All, 1, TurnStep.Start);
             }
         }
 
@@ -73,8 +75,10 @@ namespace ST
         }
 
         [PunRPC]
-        private void SetStep(int turn, TurnStep step, bool firstTurn = false)
+        private void RPC_SetStep(int turn, TurnStep step)
         {
+            var firstTurn = turn == 1 && step == TurnStep.Start;
+
             if (!firstTurn)
             {
                 OnEndStep();
@@ -86,11 +90,13 @@ namespace ST
 
         private void OnEndStep()
         {
-
+            OnStepEnd.Invoke();
         }
 
         private void OnStartStep()
         {
+            OnStepStart.Invoke();
+
             switch (Step)
             {
                 case TurnStep.Start:
@@ -106,6 +112,24 @@ namespace ST
             var ship = PhotonNetwork.LocalPlayer.GetShips()[0];
             ToggleFocusOnShip(ship);
             SelectShip(ship);
+        }
+
+        public override void OnPlayerPropertiesUpdate(Player target, Hashtable changedProps)
+        {
+            if (PhotonNetwork.IsMasterClient)
+            {
+                if (PhotonNetwork.CurrentRoom.Players.Values.All(p => p.IsReady()))
+                {
+                    NextStep();
+                }
+            }
+        }
+
+        private void NextStep()
+        {
+            var step = Step.Next();
+            var turn = step == TurnStep.Start ? Turn + 1 : Turn;
+            photonView.RPC("RPC_SetStep", RpcTarget.All, turn, step);
         }
     }
 }

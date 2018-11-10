@@ -32,4 +32,5 @@ MonoBehaviour:
   - Fire
   - RespawnSpaceship
   - SetStep
+  - RPC_SetStep
   DisableAutoOpenWizard: 1
