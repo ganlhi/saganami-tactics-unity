@@ -109,7 +109,7 @@ namespace ST
         {
             get
             {
-                return 3; // TODO compute value based on SSD and damages
+                return SSD.InternalSystems.MaxThrust[0].y; // TODO take damages into account
             }
         }
 
@@ -117,7 +117,7 @@ namespace ST
         {
             get
             {
-                return 6; // TODO compute value based on SSD and damages
+                return SSD.InternalSystems.Pivot[0]; // TODO take damages into account
             }
         }
 
@@ -125,7 +125,7 @@ namespace ST
         {
             get
             {
-                return 6; // TODO compute value based on SSD and damages
+                return SSD.InternalSystems.Roll[0]; // TODO take damages into account
             }
         }
 

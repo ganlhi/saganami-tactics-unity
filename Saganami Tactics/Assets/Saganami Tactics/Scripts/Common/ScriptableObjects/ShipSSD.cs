@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -15,8 +14,15 @@ namespace ST
         public Faction Faction;
         public int BaseCost;
 
-        public List<RangeBand> RangeBands = new List<RangeBand>();
-        public List<InternalSystem> InternalSystems = new List<InternalSystem>();
+        public InternalSystems InternalSystems;
+
+        [Tooltip("For each entry, X and Y are start/end of band, Z is MQL")]
+        public Vector3Int[] RangeBands;
+
+        public SideSystems ForwardSystems;
+        public SideSystems AftSystems;
+        public SideSystems PortSystems;
+        public SideSystems StarboardSystems;
 
         #endregion SSD properties
 
@@ -42,51 +48,79 @@ namespace ST
     }
 
     [Serializable]
+    public struct InternalSystems
+    {
+        public int Bridge;
+        public int[] FlagBridge;
+        public int LifeSupport;
+        public int Communications;
+        public int[] Ecm;
+        public int[] Pivot;
+        public int[] Roll;
+        public int FwdImpeller;
+        public int AftImpeller;
+        public int Scale;
+        public int CoreArmor;
+
+        [Tooltip("For each entry, X is number of slots, Y is slots value")]
+        public Vector2Int[] MaxThrust;
+
+        public int HyperGenerator;
+        public int HullPoints;
+        public int[] DmgCtrlTeams;
+        public StructuralSlot[] StructuralIntegrity;
+    }
+
+    [Serializable]
+    public struct StructuralSlot
+    {
+        public StructuralSlotType Type;
+        public int Value;
+    }
+
+    public enum StructuralSlotType
+    {
+        Default,
+        DestructionRisk,
+        CoreCascade,
+        Destruction,
+    }
+
+    [Serializable]
     public struct RangeBand
     {
         public Vector2Int Range;
         public int MQL;
     }
 
-    public enum SystemType
+    [Serializable]
+    public struct SideSystems
     {
-        Bridge,
-        FlagBridge,
-        LifeSupport,
-        Communications,
-        ECM,
-        Pivot,
-        Roll,
-        FwdImpeller,
-        AftImpeller,
-        HyperGenerator,
-        Hull,
-        StructuralIntegrity,
+        public int[] FireControl;
+        public int MissileAmmunitions;
+        public int MissileLaunchers;
+        public int MissileStrength;
+        public int Lasers;
+        public int[] LaserStrength;
+        public int Grasers;
+        public int[] GraserStrength;
+        public ActiveDefenseSlot[] CounterMissiles;
+        public ActiveDefenseSlot[] PointDefenses;
+        public int Decoys;
+        public int DecoysStrength;
+    }
+
+    public enum ActiveDefenseSlotType
+    {
+        Integer,
+        TwoThird,
+        OneThird,
     }
 
     [Serializable]
-    public struct InternalSystem
+    public struct ActiveDefenseSlot
     {
-        public SystemType Type;
-        public List<DamageableSlot> Slots;
-    }
-
-    public enum DamageableSlotType
-    {
-        Default,
-        DestructionRisk,
-        CoreCascade,
-        UnsafeThrust,
-        Warshawski,
-        Destruction,
-        Unbreakable,
-    }
-
-    [Serializable]
-    public struct DamageableSlot
-    {
-        public DamageableSlotType Type;
-        public bool HasValue;
+        public ActiveDefenseSlotType Type;
         public int Value;
     }
 }

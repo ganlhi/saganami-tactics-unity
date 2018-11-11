@@ -15,178 +15,141 @@ MonoBehaviour:
   Category: {fileID: 11400000, guid: 7b913bfa81d2fab49aa0628f2c414adb, type: 2}
   Faction: {fileID: 11400000, guid: d0de7666122b351458be20e63dd967be, type: 2}
   BaseCost: 35
-  RangeBands:
-  - Range: {x: 0, y: 1}
-    MQL: 8
-  - Range: {x: 2, y: 4}
-    MQL: 6
-  - Range: {x: 5, y: 6}
-    MQL: 7
-  - Range: {x: 7, y: 10}
-    MQL: 8
-  - Range: {x: 11, y: 14}
-    MQL: 9
-  - Range: {x: 15, y: 17}
-    MQL: 10
-  - Range: {x: 18, y: 22}
-    MQL: 11
-  - Range: {x: 23, y: 26}
-    MQL: 12
   InternalSystems:
-  - Type: 0
-    Slots:
-    - Type: 0
-      HasValue: 0
-      Value: 0
-    - Type: 3
-      HasValue: 1
-      Value: 0
-    - Type: 3
-      HasValue: 1
-      Value: -1
-    - Type: 6
-      HasValue: 1
-      Value: -2
-  - Type: 2
-    Slots:
-    - Type: 0
-      HasValue: 0
-      Value: 0
-  - Type: 3
-    Slots:
-    - Type: 0
-      HasValue: 0
-      Value: 0
-  - Type: 4
-    Slots:
-    - Type: 0
-      HasValue: 1
-      Value: 1
-  - Type: 5
-    Slots:
-    - Type: 0
-      HasValue: 1
-      Value: 6
-    - Type: 0
-      HasValue: 1
-      Value: 4
-    - Type: 0
-      HasValue: 1
-      Value: 2
-  - Type: 6
-    Slots:
-    - Type: 0
-      HasValue: 1
-      Value: 6
-    - Type: 0
-      HasValue: 1
-      Value: 4
-    - Type: 0
-      HasValue: 1
-      Value: 2
-  - Type: 7
-    Slots:
-    - Type: 0
-      HasValue: 0
-      Value: 0
-    - Type: 0
-      HasValue: 0
-      Value: 0
-    - Type: 0
-      HasValue: 0
-      Value: 0
-    - Type: 0
-      HasValue: 0
-      Value: 0
-    - Type: 0
-      HasValue: 0
-      Value: 0
-    - Type: 4
-      HasValue: 0
-      Value: 0
-  - Type: 8
-    Slots:
-    - Type: 0
-      HasValue: 0
-      Value: 0
-    - Type: 0
-      HasValue: 0
-      Value: 0
-    - Type: 0
-      HasValue: 0
-      Value: 0
-    - Type: 0
-      HasValue: 0
-      Value: 0
-    - Type: 0
-      HasValue: 0
-      Value: 0
-    - Type: 4
-      HasValue: 0
-      Value: 0
-  - Type: 9
-    Slots:
-    - Type: 0
-      HasValue: 0
-      Value: 0
-  - Type: 10
-    Slots:
-    - Type: 0
-      HasValue: 0
-      Value: 0
-    - Type: 0
-      HasValue: 0
-      Value: 0
-    - Type: 0
-      HasValue: 0
-      Value: 0
-    - Type: 0
-      HasValue: 1
-      Value: 0
-    - Type: 0
-      HasValue: 0
-      Value: 0
-    - Type: 0
-      HasValue: 0
-      Value: 0
-    - Type: 0
-      HasValue: 1
-      Value: 0
-    - Type: 0
-      HasValue: 0
-      Value: 0
-    - Type: 0
-      HasValue: 0
-      Value: 0
-    - Type: 0
-      HasValue: 0
-      Value: 0
-    - Type: 0
-      HasValue: 1
-      Value: 0
-  - Type: 11
-    Slots:
+    Bridge: 4
+    FlagBridge: 
+    LifeSupport: 1
+    Communications: 1
+    Ecm: 01000000
+    Pivot: 060000000400000002000000
+    Roll: 060000000400000002000000
+    FwdImpeller: 6
+    AftImpeller: 6
+    Scale: 0
+    CoreArmor: 0
+    MaxThrust:
+    - {x: 3, y: 3}
+    - {x: 4, y: 2}
+    - {x: 3, y: 1}
+    HyperGenerator: 1
+    HullPoints: 11
+    DmgCtrlTeams: 03000000060000000a000000
+    StructuralIntegrity:
     - Type: 1
-      HasValue: 1
       Value: 5
     - Type: 1
-      HasValue: 1
       Value: 6
     - Type: 1
-      HasValue: 1
       Value: 7
     - Type: 1
-      HasValue: 1
       Value: 8
     - Type: 1
-      HasValue: 1
       Value: 9
     - Type: 1
-      HasValue: 1
       Value: 10
-    - Type: 5
-      HasValue: 0
+    - Type: 3
       Value: 0
+  RangeBands:
+  - {x: 0, y: 1, z: 8}
+  - {x: 2, y: 4, z: 6}
+  - {x: 5, y: 6, z: 7}
+  - {x: 7, y: 10, z: 8}
+  - {x: 11, y: 14, z: 9}
+  - {x: 15, y: 17, z: 10}
+  - {x: 18, y: 22, z: 11}
+  - {x: 23, y: 26, z: 12}
+  ForwardSystems:
+    FireControl: 000000000200000003000000
+    MissileAmmunitions: 40
+    MissileLaunchers: 2
+    MissileStrength: 3
+    Lasers: 1
+    LaserStrength: 0500000004000000
+    Grasers: 0
+    GraserStrength: 
+    CounterMissiles:
+    - Type: 0
+      Value: 1
+    - Type: 2
+      Value: 0
+    PointDefenses:
+    - Type: 1
+      Value: 0
+    - Type: 2
+      Value: 0
+    Decoys: 0
+    DecoysStrength: 0
+  AftSystems:
+    FireControl: 000000000200000003000000
+    MissileAmmunitions: 40
+    MissileLaunchers: 2
+    MissileStrength: 3
+    Lasers: 1
+    LaserStrength: 0500000004000000
+    Grasers: 0
+    GraserStrength: 
+    CounterMissiles:
+    - Type: 0
+      Value: 1
+    - Type: 2
+      Value: 0
+    PointDefenses:
+    - Type: 1
+      Value: 0
+    - Type: 2
+      Value: 0
+    Decoys: 0
+    DecoysStrength: 0
+  PortSystems:
+    FireControl: 00000000010000000200000003000000
+    MissileAmmunitions: 140
+    MissileLaunchers: 7
+    MissileStrength: 3
+    Lasers: 2
+    LaserStrength: 05000000
+    Grasers: 2
+    GraserStrength: 05000000
+    CounterMissiles:
+    - Type: 0
+      Value: 1
+    - Type: 0
+      Value: 1
+    - Type: 2
+      Value: 0
+    PointDefenses:
+    - Type: 0
+      Value: 1
+    - Type: 1
+      Value: 0
+    - Type: 2
+      Value: 0
+    Decoys: 3
+    DecoysStrength: 2
+  StarboardSystems:
+    FireControl: 00000000010000000200000003000000
+    MissileAmmunitions: 140
+    MissileLaunchers: 7
+    MissileStrength: 3
+    Lasers: 2
+    LaserStrength: 05000000
+    Grasers: 2
+    GraserStrength: 05000000
+    CounterMissiles:
+    - Type: 0
+      Value: 1
+    - Type: 0
+      Value: 1
+    - Type: 2
+      Value: 0
+    PointDefenses:
+    - Type: 0
+      Value: 1
+    - Type: 1
+      Value: 0
+    - Type: 2
+      Value: 0
+    Decoys: 3
+    DecoysStrength: 2
   SampleNames:
   - HMS Audacious
   - HMS Courageous
