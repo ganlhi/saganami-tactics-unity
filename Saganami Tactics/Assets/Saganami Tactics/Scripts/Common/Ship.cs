@@ -1,5 +1,7 @@
 ﻿using Photon.Pun;
 using System.Collections;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using UnityEngine;
 
@@ -10,19 +12,35 @@ namespace ST
     public class Ship : MonoBehaviourPunCallbacks, IPunObservable
     {
         #region Editor customization
+
         [SerializeField]
         private LineRenderer VectorLine;
-        #endregion
+
+        #endregion Editor customization
 
         #region Public variables
+
         public ShipSSD SSD { get; private set; }
-        public string SSDName;
+
+        private string ssdName;
+
+        public string SSDName
+        {
+            get { return ssdName; }
+            set
+            {
+                ssdName = value;
+                SSD = Resources.Load<ShipSSD>("SSD/" + SSDName);
+            }
+        }
+
         public string Name;
         public Vector3 Velocity = Vector3.zero;
         public Vector3 Thrust = Vector3.zero;
 
         private int middleMarkerViewId = -1;
         private ShipMarker middleMarker;
+
         public ShipMarker MiddleMarker
         {
             get
@@ -40,6 +58,7 @@ namespace ST
 
         private int endMarkerViewId = -1;
         private ShipMarker endMarker;
+
         public ShipMarker EndMarker
         {
             get
@@ -61,13 +80,86 @@ namespace ST
         }
 
         public bool IsMoving { get; private set; }
-        #endregion
+
+        public ReadOnlyCollection<Quaternion> PlottedPivots
+        {
+            get
+            {
+                return plottedPivots.AsReadOnly();
+            }
+        }
+
+        public ReadOnlyCollection<Quaternion> PlottedRolls
+        {
+            get
+            {
+                return plottedRolls.AsReadOnly();
+            }
+        }
+
+        public Vector3 PlottedThrust
+        {
+            get
+            {
+                return plottedThrust;
+            }
+        }
+
+        public int MaxThrust
+        {
+            get
+            {
+                return 3; // TODO compute value based on SSD and damages
+            }
+        }
+
+        public int MaxPivots
+        {
+            get
+            {
+                return 6; // TODO compute value based on SSD and damages
+            }
+        }
+
+        public int MaxRolls
+        {
+            get
+            {
+                return 6; // TODO compute value based on SSD and damages
+            }
+        }
+
+        public int UsedPivots
+        {
+            get
+            {
+                return plottedPivots.Count;
+            }
+        }
+
+        public int UsedRolls
+        {
+            get
+            {
+                return plottedRolls.Count;
+            }
+        }
+
+        #endregion Public variables
+
+        #region Private variables
+
+        private List<Quaternion> plottedPivots = new List<Quaternion>();
+        private List<Quaternion> plottedRolls = new List<Quaternion>();
+        private Vector3 plottedThrust = Vector3.zero;
+
+        #endregion Private variables
 
         #region Unity callbacks
+
         private void Start()
         {
             DontDestroyOnLoad(gameObject);
-            SSD = Resources.Load<ShipSSD>("SSD/" + SSDName);
             var color = GameSettings.GetColor(photonView.Owner.GetColorIndex());
             VectorLine.startColor = color;
             VectorLine.endColor = color;
@@ -86,9 +178,11 @@ namespace ST
                 VectorLine.enabled = false;
             }
         }
-        #endregion
+
+        #endregion Unity callbacks
 
         #region Photon callbacks
+
         public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
         {
             if (stream.IsWriting)
@@ -108,13 +202,40 @@ namespace ST
                 endMarkerViewId = (int)stream.ReceiveNext();
             }
         }
-        #endregion
+
+        #endregion Photon callbacks
 
         #region Public methods
+
+        public void ResetPivots(bool updateMarkers = false)
+        {
+            plottedPivots.Clear();
+            if (updateMarkers)
+            {
+                PlaceMarkers();
+            }
+        }
+
+        public void ResetRolls(bool updateMarkers = false)
+        {
+            plottedRolls.Clear();
+            if (updateMarkers)
+            {
+                PlaceMarkers();
+            }
+        }
+
+        public void ResetPlottings()
+        {
+            ResetPivots();
+            ResetRolls();
+            plottedThrust = Vector3.zero;
+        }
+
         public void PlaceMarkers()
         {
-            PlaceMarker(MiddleMarker, .5f);
-            PlaceMarker(EndMarker);
+            PlaceMarker(MiddleMarker, true);
+            PlaceMarker(EndMarker, false);
         }
 
         public void AutoMove()
@@ -125,27 +246,65 @@ namespace ST
                 case TurnStep.HalfMove:
                     marker = MiddleMarker;
                     break;
+
                 case TurnStep.FullMove:
                     marker = EndMarker;
                     break;
+
                 default:
                     return;
             }
 
             StartCoroutine(MoveToMarker(marker));
         }
-        #endregion
+
+        public void PlotPivot(Quaternion rot)
+        {
+            plottedPivots.Add(rot);
+            PlaceMarkers();
+        }
+
+        public void PlotRoll(Quaternion rot)
+        {
+            plottedRolls.Add(rot);
+            PlaceMarkers();
+        }
+
+        public void PlotThrust(int amount)
+        {
+            amount = Mathf.Clamp(amount, 0, MaxThrust);
+            plottedThrust = amount * MiddleMarker.transform.forward.normalized;
+            PlaceMarkers();
+        }
+
+        #endregion Public methods
 
         #region Private methods
-        private void PlaceMarker(ShipMarker marker, float velocityMult = 1)
+
+        private void PlaceMarker(ShipMarker marker, bool isHalf)
         {
+            var velocityMult = isHalf ? .5f : 1f;
             marker.transform.position = transform.position + velocityMult * Velocity;
-            marker.transform.rotation = transform.rotation;
+
+            var pivots = plottedPivots.Take(isHalf ? Mathf.FloorToInt(UsedPivots / 2) : UsedPivots);
+            var rolls = plottedRolls.Take(isHalf ? Mathf.FloorToInt(UsedRolls / 2) : UsedRolls);
+
+            var qPivot = pivots.Count() == 0
+                ? Quaternion.identity
+                : pivots.Aggregate(Quaternion.identity, (totalPivot, pivot) => totalPivot * pivot);
+
+            var qRoll = rolls.Count() == 0
+                ? Quaternion.identity
+                : rolls.Aggregate(Quaternion.identity, (totalRoll, roll) => totalRoll * roll);
+
+            marker.transform.rotation = transform.rotation * qPivot * qRoll;
+
+            if (UsedPivots == 0)
+            {
+                marker.transform.position += plottedThrust * .5f * velocityMult;
+            }
 
             marker.SetActive(transform.position != marker.transform.position);
-
-            // TODO Remove when plotting implemented
-            marker.transform.rotation *= Quaternion.AngleAxis(velocityMult * 60, Vector3.right) * Quaternion.AngleAxis(velocityMult * 30, Vector3.forward);
         }
 
         private ShipMarker GetOrCreateMarker(int viewId)
@@ -197,6 +356,7 @@ namespace ST
             marker.SetActive(false);
             IsMoving = false;
         }
-        #endregion
+
+        #endregion Private methods
     }
 }

@@ -22,6 +22,8 @@ namespace ST
 
         public UnityEvent OnStepEnd = new UnityEvent();
         public UnityEvent OnStepStart = new UnityEvent();
+        public UnityEvent OnShipSelect = new UnityEvent();
+
         public static PlayController Instance { get; private set; }
 
         public Ship SelectedShip { get; private set; }
@@ -50,8 +52,8 @@ namespace ST
 
         public void SelectShip(Ship ship)
         {
-            Debug.Log("Select ship: " + ship.Name);
             SelectedShip = ship;
+            OnShipSelect.Invoke();
         }
 
         public void ToggleFocusOnShip(Ship ship)
@@ -108,7 +110,11 @@ namespace ST
             switch (Step)
             {
                 case TurnStep.Start:
-                    PhotonNetwork.LocalPlayer.GetShips().ForEach(s => s.PlaceMarkers());
+                    PhotonNetwork.LocalPlayer.GetShips().ForEach(s =>
+                    {
+                        s.ResetPlottings();
+                        s.PlaceMarkers();
+                    });
                     break;
 
                 case TurnStep.HalfMove:

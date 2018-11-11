@@ -703,7 +703,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   VectorLine: {fileID: 120160908138681214}
-  SSDName: 
   Name: 
   Velocity: {x: 0, y: 0, z: 0}
   Thrust: {x: 0, y: 0, z: 0}
