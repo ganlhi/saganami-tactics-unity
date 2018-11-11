@@ -14,6 +14,179 @@ MonoBehaviour:
   ClassName: Courageous
   Category: {fileID: 11400000, guid: 7b913bfa81d2fab49aa0628f2c414adb, type: 2}
   Faction: {fileID: 11400000, guid: d0de7666122b351458be20e63dd967be, type: 2}
+  BaseCost: 35
+  RangeBands:
+  - Range: {x: 0, y: 1}
+    MQL: 8
+  - Range: {x: 2, y: 4}
+    MQL: 6
+  - Range: {x: 5, y: 6}
+    MQL: 7
+  - Range: {x: 7, y: 10}
+    MQL: 8
+  - Range: {x: 11, y: 14}
+    MQL: 9
+  - Range: {x: 15, y: 17}
+    MQL: 10
+  - Range: {x: 18, y: 22}
+    MQL: 11
+  - Range: {x: 23, y: 26}
+    MQL: 12
+  InternalSystems:
+  - Type: 0
+    Slots:
+    - Type: 0
+      HasValue: 0
+      Value: 0
+    - Type: 3
+      HasValue: 1
+      Value: 0
+    - Type: 3
+      HasValue: 1
+      Value: -1
+    - Type: 6
+      HasValue: 1
+      Value: -2
+  - Type: 2
+    Slots:
+    - Type: 0
+      HasValue: 0
+      Value: 0
+  - Type: 3
+    Slots:
+    - Type: 0
+      HasValue: 0
+      Value: 0
+  - Type: 4
+    Slots:
+    - Type: 0
+      HasValue: 1
+      Value: 1
+  - Type: 5
+    Slots:
+    - Type: 0
+      HasValue: 1
+      Value: 6
+    - Type: 0
+      HasValue: 1
+      Value: 4
+    - Type: 0
+      HasValue: 1
+      Value: 2
+  - Type: 6
+    Slots:
+    - Type: 0
+      HasValue: 1
+      Value: 6
+    - Type: 0
+      HasValue: 1
+      Value: 4
+    - Type: 0
+      HasValue: 1
+      Value: 2
+  - Type: 7
+    Slots:
+    - Type: 0
+      HasValue: 0
+      Value: 0
+    - Type: 0
+      HasValue: 0
+      Value: 0
+    - Type: 0
+      HasValue: 0
+      Value: 0
+    - Type: 0
+      HasValue: 0
+      Value: 0
+    - Type: 0
+      HasValue: 0
+      Value: 0
+    - Type: 4
+      HasValue: 0
+      Value: 0
+  - Type: 8
+    Slots:
+    - Type: 0
+      HasValue: 0
+      Value: 0
+    - Type: 0
+      HasValue: 0
+      Value: 0
+    - Type: 0
+      HasValue: 0
+      Value: 0
+    - Type: 0
+      HasValue: 0
+      Value: 0
+    - Type: 0
+      HasValue: 0
+      Value: 0
+    - Type: 4
+      HasValue: 0
+      Value: 0
+  - Type: 9
+    Slots:
+    - Type: 0
+      HasValue: 0
+      Value: 0
+  - Type: 10
+    Slots:
+    - Type: 0
+      HasValue: 0
+      Value: 0
+    - Type: 0
+      HasValue: 0
+      Value: 0
+    - Type: 0
+      HasValue: 0
+      Value: 0
+    - Type: 0
+      HasValue: 1
+      Value: 0
+    - Type: 0
+      HasValue: 0
+      Value: 0
+    - Type: 0
+      HasValue: 0
+      Value: 0
+    - Type: 0
+      HasValue: 1
+      Value: 0
+    - Type: 0
+      HasValue: 0
+      Value: 0
+    - Type: 0
+      HasValue: 0
+      Value: 0
+    - Type: 0
+      HasValue: 0
+      Value: 0
+    - Type: 0
+      HasValue: 1
+      Value: 0
+  - Type: 11
+    Slots:
+    - Type: 1
+      HasValue: 1
+      Value: 5
+    - Type: 1
+      HasValue: 1
+      Value: 6
+    - Type: 1
+      HasValue: 1
+      Value: 7
+    - Type: 1
+      HasValue: 1
+      Value: 8
+    - Type: 1
+      HasValue: 1
+      Value: 9
+    - Type: 1
+      HasValue: 1
+      Value: 10
+    - Type: 5
+      HasValue: 0
+      Value: 0
   SampleNames:
   - HMS Audacious
   - HMS Courageous
@@ -22,4 +195,3 @@ MonoBehaviour:
   - HMS Intrepid
   - HMS Resolute
   - HMS Valiant
-  BaseCost: 35
