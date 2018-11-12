@@ -97,14 +97,6 @@ namespace ST
             }
         }
 
-        public Vector3 PlottedThrust
-        {
-            get
-            {
-                return plottedThrust;
-            }
-        }
-
         public int MaxThrust
         {
             get
@@ -151,7 +143,6 @@ namespace ST
 
         private List<Quaternion> plottedPivots = new List<Quaternion>();
         private List<Quaternion> plottedRolls = new List<Quaternion>();
-        private Vector3 plottedThrust = Vector3.zero;
 
         #endregion Private variables
 
@@ -192,6 +183,8 @@ namespace ST
                 stream.SendNext(Name);
                 stream.SendNext(middleMarkerViewId);
                 stream.SendNext(endMarkerViewId);
+                stream.SendNext(Velocity);
+                stream.SendNext(Thrust);
             }
             else
             {
@@ -200,6 +193,8 @@ namespace ST
                 Name = (string)stream.ReceiveNext();
                 middleMarkerViewId = (int)stream.ReceiveNext();
                 endMarkerViewId = (int)stream.ReceiveNext();
+                Velocity = (Vector3)stream.ReceiveNext();
+                Thrust = (Vector3)stream.ReceiveNext();
             }
         }
 
@@ -229,7 +224,7 @@ namespace ST
         {
             ResetPivots();
             ResetRolls();
-            plottedThrust = Vector3.zero;
+            Thrust = Vector3.zero;
         }
 
         public void PlaceMarkers()
@@ -273,8 +268,13 @@ namespace ST
         public void PlotThrust(int amount)
         {
             amount = Mathf.Clamp(amount, 0, MaxThrust);
-            plottedThrust = amount * MiddleMarker.transform.forward.normalized;
+            Thrust = amount * MiddleMarker.transform.forward.normalized;
             PlaceMarkers();
+        }
+
+        public void ApplyThrust()
+        {
+            Velocity += Thrust;
         }
 
         #endregion Public methods
@@ -301,7 +301,7 @@ namespace ST
 
             if (UsedPivots == 0)
             {
-                marker.transform.position += plottedThrust * .5f * velocityMult;
+                marker.transform.position += Thrust * .5f * velocityMult;
             }
 
             marker.SetActive(transform.position != marker.transform.position);

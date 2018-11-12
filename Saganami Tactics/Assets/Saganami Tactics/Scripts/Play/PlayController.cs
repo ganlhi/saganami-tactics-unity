@@ -112,14 +112,23 @@ namespace ST
                 case TurnStep.Start:
                     PhotonNetwork.LocalPlayer.GetShips().ForEach(s =>
                     {
-                        s.ResetPlottings();
                         s.PlaceMarkers();
                     });
+                    PhotonNetwork.LocalPlayer.SetReady();
                     break;
 
                 case TurnStep.HalfMove:
                 case TurnStep.FullMove:
                     MakeShipsMove();
+                    break;
+
+                case TurnStep.End:
+                    PhotonNetwork.LocalPlayer.GetShips().ForEach(s =>
+                    {
+                        s.ApplyThrust();
+                        s.ResetPlottings();
+                    });
+                    PhotonNetwork.LocalPlayer.SetReady();
                     break;
 
                 default:

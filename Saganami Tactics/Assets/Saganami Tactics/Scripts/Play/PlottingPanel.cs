@@ -110,7 +110,7 @@ namespace ST
             rollResetButton.interactable = ship.UsedRolls > 0;
 
             thrustSlider.maxValue = ship.MaxThrust;
-            thrustSlider.value = ship.PlottedThrust.magnitude;
+            thrustSlider.value = ship.Thrust.magnitude;
             thrustText.text = thrustSlider.value.ToString();
         }
 
