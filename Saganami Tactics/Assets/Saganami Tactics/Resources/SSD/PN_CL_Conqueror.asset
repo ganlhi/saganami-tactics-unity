@@ -14,6 +14,148 @@ MonoBehaviour:
   ClassName: Conqueror
   Category: {fileID: 11400000, guid: 7b913bfa81d2fab49aa0628f2c414adb, type: 2}
   Faction: {fileID: 11400000, guid: b4d2986edfcbf6242bdaca13fc95e778, type: 2}
+  BaseCost: 42
+  InternalSystems:
+    Bridge: 4
+    FlagBridge: 
+    LifeSupport: 1
+    Communications: 1
+    Ecm: 0100000000000000
+    Pivot: 05000000040000000300000002000000
+    Roll: 05000000040000000300000002000000
+    FwdImpeller: 7
+    AftImpeller: 7
+    Scale: 4
+    CoreArmor: 1
+    MaxThrust:
+    - {x: 3, y: 3}
+    - {x: 6, y: 2}
+    - {x: 3, y: 1}
+    HyperGenerator: 1
+    HullPoints: 13
+    DmgCtrlTeams: 03000000080000000c000000
+    StructuralIntegrity:
+    - Type: 1
+      Value: 4
+    - Type: 1
+      Value: 5
+    - Type: 1
+      Value: 6
+    - Type: 1
+      Value: 7
+    - Type: 1
+      Value: 8
+    - Type: 1
+      Value: 9
+    - Type: 1
+      Value: 10
+    - Type: 3
+      Value: 0
+  RangeBands:
+  - {x: 0, y: 1, z: 9}
+  - {x: 2, y: 4, z: 7}
+  - {x: 5, y: 6, z: 8}
+  - {x: 7, y: 10, z: 9}
+  - {x: 11, y: 14, z: 10}
+  - {x: 15, y: 17, z: 11}
+  - {x: 18, y: 22, z: 12}
+  - {x: 23, y: 26, z: 13}
+  ForwardSystems:
+    FireControl: 000000000100000003000000
+    MissileAmmunitions: 32
+    MissileLaunchers: 2
+    MissileStrength: 4
+    Lasers: 1
+    LaserStrength: 0700000005000000
+    Grasers: 0
+    GraserStrength: 
+    CounterMissiles:
+    - Type: 1
+      Value: 0
+    - Type: 2
+      Value: 0
+    PointDefenses:
+    - Type: 1
+      Value: 0
+    - Type: 2
+      Value: 0
+    Decoys: 0
+    DecoysStrength: 0
+  AftSystems:
+    FireControl: 000000000100000003000000
+    MissileAmmunitions: 32
+    MissileLaunchers: 2
+    MissileStrength: 4
+    Lasers: 2
+    LaserStrength: 0700000005000000
+    Grasers: 0
+    GraserStrength: 
+    CounterMissiles:
+    - Type: 1
+      Value: 0
+    - Type: 2
+      Value: 0
+    PointDefenses:
+    - Type: 1
+      Value: 0
+    - Type: 2
+      Value: 0
+    Decoys: 0
+    DecoysStrength: 0
+  PortSystems:
+    FireControl: 00000000010000000200000003000000
+    MissileAmmunitions: 144
+    MissileLaunchers: 9
+    MissileStrength: 4
+    Lasers: 6
+    LaserStrength: 0600000005000000
+    Grasers: 0
+    GraserStrength: 
+    CounterMissiles:
+    - Type: 0
+      Value: 1
+    - Type: 0
+      Value: 1
+    - Type: 1
+      Value: 0
+    - Type: 2
+      Value: 0
+    PointDefenses:
+    - Type: 0
+      Value: 1
+    - Type: 0
+      Value: 1
+    - Type: 2
+      Value: 0
+    Decoys: 4
+    DecoysStrength: 1
+  StarboardSystems:
+    FireControl: 00000000010000000200000003000000
+    MissileAmmunitions: 144
+    MissileLaunchers: 9
+    MissileStrength: 4
+    Lasers: 6
+    LaserStrength: 0600000005000000
+    Grasers: 0
+    GraserStrength: 
+    CounterMissiles:
+    - Type: 0
+      Value: 1
+    - Type: 0
+      Value: 1
+    - Type: 1
+      Value: 0
+    - Type: 2
+      Value: 0
+    PointDefenses:
+    - Type: 0
+      Value: 1
+    - Type: 0
+      Value: 1
+    - Type: 2
+      Value: 0
+    Decoys: 4
+    DecoysStrength: 1
   SampleNames:
   - PNS Alexander
   - PNS Alvarado
@@ -32,4 +174,3 @@ MonoBehaviour:
   - PNS Vaubon
   - PNS Wari
   - PNS William
-  BaseCost: 42
