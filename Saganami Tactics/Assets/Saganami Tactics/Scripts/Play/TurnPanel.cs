@@ -1,11 +1,13 @@
-﻿using Photon.Pun;
+﻿using ExitGames.Client.Photon;
+using Photon.Pun;
+using Photon.Realtime;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace ST
 {
-    public class TurnPanel : MonoBehaviour
+    public class TurnPanel : MonoBehaviourPunCallbacks
     {
         [SerializeField]
         private TMP_Text turnNumber;
@@ -15,6 +17,12 @@ namespace ST
 
         [SerializeField]
         private Button readyButton;
+
+        [SerializeField]
+        private Sprite readyIcon;
+
+        [SerializeField]
+        private Sprite waitingIcon;
 
         private void Start()
         {
@@ -31,6 +39,17 @@ namespace ST
         {
             turnNumber.text = "#" + PlayController.Instance.Turn;
             stepName.text = GetStepName(PlayController.Instance.Step);
+
+            if (PhotonNetwork.LocalPlayer.IsReady() || PlayController.Instance.Busy)
+            {
+                readyButton.interactable = false;
+                readyButton.GetComponent<Image>().sprite = waitingIcon;
+            }
+            else
+            {
+                readyButton.interactable = true;
+                readyButton.GetComponent<Image>().sprite = readyIcon;
+            }
         }
 
         private string GetStepName(TurnStep step)
@@ -52,6 +71,11 @@ namespace ST
             }
 
             return string.Empty;
+        }
+
+        public override void OnPlayerPropertiesUpdate(Player target, Hashtable changedProps)
+        {
+            UpdateUi();
         }
     }
 }

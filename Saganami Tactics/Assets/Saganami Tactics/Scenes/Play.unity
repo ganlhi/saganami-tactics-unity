@@ -8136,6 +8136,8 @@ MonoBehaviour:
   turnNumber: {fileID: 313719159}
   stepName: {fileID: 85331444}
   readyButton: {fileID: 2067732742}
+  readyIcon: {fileID: 21300000, guid: aee32ac59e8651542b5e2cd8a66769dc, type: 3}
+  waitingIcon: {fileID: 21300000, guid: 3f7873cde6c3adb488fb36e859a63aa1, type: 3}
 --- !u!1 &1971617029
 GameObject:
   m_ObjectHideFlags: 0

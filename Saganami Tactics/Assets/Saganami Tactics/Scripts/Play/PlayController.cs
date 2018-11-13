@@ -53,6 +53,8 @@ namespace ST
             }
         }
 
+        public bool Busy { get; private set; }
+
         #endregion Public variables
 
         #region Private variables
@@ -199,6 +201,7 @@ namespace ST
 
         private IEnumerator WaitForShipsToFinishMoving(List<Ship> ships)
         {
+            Busy = true;
             ships.ForEach(s => s.AutoMove());
 
             do
@@ -207,6 +210,7 @@ namespace ST
             } while (ships.Any(s => s.IsMoving));
 
             PhotonNetwork.LocalPlayer.SetReady();
+            Busy = false;
         }
 
         private void SetTargettingContext()
