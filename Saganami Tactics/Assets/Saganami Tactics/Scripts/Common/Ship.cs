@@ -137,6 +137,28 @@ namespace ST
             }
         }
 
+        public int MaxRange
+        {
+            get
+            {
+                return SSD.RangeBands[SSD.RangeBands.Length - 1].y; // TODO take damages into account;
+            }
+        }
+
+        public Dictionary<Side, int> AvailableMissiles
+        {
+            get
+            {
+                return new Dictionary<Side, int>()
+                {
+                    { Side.Forward, Mathf.Min(SSD.ForwardSystems.MissileLaunchers, SSD.ForwardSystems.MissileAmmunitions) },
+                    { Side.Aft, Mathf.Min(SSD.AftSystems.MissileLaunchers, SSD.AftSystems.MissileAmmunitions) },
+                    { Side.Port, Mathf.Min(SSD.PortSystems.MissileLaunchers, SSD.PortSystems.MissileAmmunitions) },
+                    { Side.Starboard, Mathf.Min(SSD.StarboardSystems.MissileLaunchers, SSD.StarboardSystems.MissileAmmunitions) },
+                };
+            }
+        }
+
         #endregion Public variables
 
         #region Private variables
@@ -231,6 +253,76 @@ namespace ST
         {
             PlaceMarker(MiddleMarker, true);
             PlaceMarker(EndMarker, false);
+        }
+
+        public List<TargetData> IdentifyTargets(Salvo salvo, Side side)
+        {
+            Transform from = salvo == Salvo.Late ? MiddleMarker.transform : transform;
+
+            var targets = new List<TargetData>();
+
+            foreach (var ship in PlayController.Instance.GetAllShips())
+            {
+                if (ship.photonView.IsMine)
+                {
+                    continue;
+                }
+
+                // Get target transform
+                Transform to = salvo == Salvo.Early
+                    ? ship.transform
+                    : (salvo == Salvo.Middle ? ship.MiddleMarker.transform : ship.EndMarker.transform);
+
+                // Check distance
+                var distance = Mathf.CeilToInt(from.position.DistanceTo(to.position));
+                if (MaxRange < distance)
+                {
+                    continue;
+                }
+
+                // Check missiles
+                var missiles = AvailableMissiles[side];
+                if (missiles <= 0)
+                {
+                    continue;
+                }
+
+                var attackBearing = Bearing.Compute(from, to.position);
+                if (attackBearing.Wedge.HasValue || attackBearing.Side != side)
+                {
+                    continue;
+                }
+
+                var defenseBearing = Bearing.Compute(to, from.position);
+
+                var mql = GetMQLAtDistance(distance);
+
+                targets.Add(new TargetData
+                {
+                    Attacker = this,
+                    Target = ship,
+                    Distance = distance,
+                    MQL = mql.Value,
+                    Missiles = missiles,
+                    Salvo = salvo,
+                    AttackingSide = side,
+                    TargetSide = defenseBearing.Side,
+                    TargetSideWall = defenseBearing.SideWall,
+                    TargetWedge = defenseBearing.Wedge
+                });
+            }
+
+            return targets;
+        }
+
+        public int? GetMQLAtDistance(int distance)
+        {
+            var bands = SSD.RangeBands.Where(rb => rb.y <= distance);
+            if (bands.Count() == 0)
+            {
+                return null;
+            }
+            return bands.Last().z;
         }
 
         public void AutoMove()

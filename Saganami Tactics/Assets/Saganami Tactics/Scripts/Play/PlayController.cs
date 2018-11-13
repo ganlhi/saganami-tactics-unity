@@ -16,6 +16,9 @@ namespace ST
         [SerializeField]
         private Moba_Camera cameraController;
 
+        [SerializeField]
+        private TargettingLines targettingLines;
+
         #endregion Editor customization
 
         #region Public variables
@@ -30,7 +33,35 @@ namespace ST
         public TurnStep Step { get; private set; }
         public int Turn { get; private set; }
 
+        public Salvo TargettingSalvo
+        {
+            get { return targettingSalvo; }
+            set
+            {
+                targettingSalvo = value;
+                SetTargettingContext();
+            }
+        }
+
+        public Side? TargettingFrom
+        {
+            get { return targettingFrom; }
+            set
+            {
+                targettingFrom = value;
+                SetTargettingContext();
+            }
+        }
+
         #endregion Public variables
+
+        #region Private variables
+
+        private List<TargetData> potentialTargets;
+        private Side? targettingFrom;
+        private Salvo targettingSalvo;
+
+        #endregion Private variables
 
         #region Public methods
 
@@ -176,6 +207,20 @@ namespace ST
             } while (ships.Any(s => s.IsMoving));
 
             PhotonNetwork.LocalPlayer.SetReady();
+        }
+
+        private void SetTargettingContext()
+        {
+            if (TargettingFrom.HasValue)
+            {
+                potentialTargets = SelectedShip.IdentifyTargets(TargettingSalvo, TargettingFrom.Value);
+
+                targettingLines.ShowLines(potentialTargets);
+            }
+            else
+            {
+                targettingLines.RemoveLines();
+            }
         }
 
         #endregion Private methods

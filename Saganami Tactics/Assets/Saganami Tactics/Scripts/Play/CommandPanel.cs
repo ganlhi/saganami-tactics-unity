@@ -15,6 +15,9 @@ namespace ST
         private GameObject plottingPanel;
 
         [SerializeField]
+        private GameObject targettingPanel;
+
+        [SerializeField]
         private Image flag;
 
         [SerializeField]
@@ -92,6 +95,10 @@ namespace ST
                 {
                     case TurnStep.Plotting:
                         plottingPanel.SetActive(true);
+                        break;
+
+                    case TurnStep.SetupSalvos:
+                        targettingPanel.SetActive(true);
                         break;
 
                     default:
