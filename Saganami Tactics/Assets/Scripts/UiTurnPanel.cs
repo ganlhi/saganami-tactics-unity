@@ -4,8 +4,10 @@ using UnityEngine.UI;
 
 public class UiTurnPanel : MonoBehaviour
 {
+#pragma warning disable 0649
     [SerializeField] private TMP_Text text;
     [SerializeField] private Button button;
+#pragma warning restore
 
     private void Start()
     {

@@ -1,23 +1,29 @@
+using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 public enum Pivot
 {
-    Up,
-    Down,
-    Left,
-    Right,
-    UpLeft,
-    UpRight,
-    DownLeft,
-    DownRight,
+    Up = 0,
+    Down = 1,
+    Left = 2,
+    Right = 3,
+    UpLeft = 4,
+    UpRight = 5,
+    DownLeft = 6,
+    DownRight = 7,
 }
 
-public enum Roll { Left, Right }
+public enum Roll { Left = 0, Right = 1 }
 
+[Serializable]
 public struct Plotting
 {
     static int Increment = 30;
+
+    public static bool IsDiagonal(Pivot p)
+    {
+        return (int)p >= 4;
+    }
 
     public List<Pivot> Pivots;
     public List<Roll> Rolls;
@@ -116,6 +122,21 @@ public struct Plotting
             };
 
             return p.AttitudeChange;
+        }
+    }
+
+    public void UndoPivot()
+    {
+        if (Pivots.Count > 0)
+        {
+            Pivots.RemoveAt(Pivots.Count - 1);
+        }
+    }
+    public void UndoRoll()
+    {
+        if (Rolls.Count > 0)
+        {
+            Rolls.RemoveAt(Rolls.Count - 1);
         }
     }
 }

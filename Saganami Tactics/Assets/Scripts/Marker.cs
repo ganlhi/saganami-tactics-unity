@@ -11,8 +11,10 @@ public class Marker : MonoBehaviour
     public bool Visible;
     public DisplayMode Mode;
 
+#pragma warning disable 0649
     [SerializeField] GameObject dotModeDisplay;
     [SerializeField] GameObject ghostModeDisplay;
+#pragma warning restore
 
     private void setDisplayMode(DisplayMode mode)
     {

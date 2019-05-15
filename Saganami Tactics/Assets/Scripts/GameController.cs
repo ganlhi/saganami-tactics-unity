@@ -15,12 +15,13 @@ public class GameController : MonoBehaviour
     public Step Step;
     public bool CanGoNextStep = true;
 
-    public List<Ship> Ships
-    {
-        get { return new List<Ship>(ships.Values); }
-    }
+    public List<Ship> Ships => new List<Ship>(ships.Values);
 
+    public bool IsPlotting => Started && Step == Step.Plotting;
+
+#pragma warning disable 0649
     [SerializeField] GameObject shipPrefab;
+#pragma warning restore
 
     private Dictionary<Side, Vector3> sidesDeploymentOrigins = new Dictionary<Side, Vector3>()
     {
@@ -56,15 +57,21 @@ public class GameController : MonoBehaviour
             {
                 s.ID = Guid.NewGuid();
             }
+
+            s.MarkersDisplayMode = s.Side == LocalPlayerSide ? Marker.DisplayMode.Ghost : Marker.DisplayMode.Dot;
+
             ships.Add(s.ID, s);
+
+            if (SelectedShip == null) SelectedShip = s;
         }
     }
 
-    public Ship AddShip(Side side, string name)
+    public Ship AddShip(Side side, string name, ShipStats stats)
     {
         var ship = GameObject.Instantiate(shipPrefab).GetComponent<Ship>();
         ship.Side = side;
         ship.Name = name;
+        ship.Stats = stats;
         ship.MarkersDisplayMode = LocalPlayerSide == side ? Marker.DisplayMode.Ghost : Marker.DisplayMode.Dot;
         ship.ID = Guid.NewGuid();
         ship.Position = sidesDeploymentOrigins[side];

@@ -8,19 +8,27 @@ public class Ship : MonoBehaviour
     public Guid ID;
     public Side Side;
     public string Name;
+    public ShipStats Stats;
+
     public Vector3 Position;
     public Vector3 Velocity;
     public Attitude Attitude;
+
     public Plotting Plotting = Plotting.Empty;
+
     public Marker.DisplayMode MarkersDisplayMode;
+
+    public int AvailablePivots => Stats.MaxPivots - Plotting.Pivots.Count;
+    public int AvailableRolls => Stats.MaxPivots - Plotting.Rolls.Count;
 
     private LineRenderer velocityLine;
 
     private Marker middleMarker;
     private Marker endMarker;
 
+#pragma warning disable 0649
     [SerializeField] GameObject markerPrefab;
-    [SerializeField] bool debugLiveUpdate;
+#pragma warning restore
 
     private void Start()
     {
@@ -35,10 +43,9 @@ public class Ship : MonoBehaviour
         updateVelocityLine();
         setMarkersDisplayMode();
 
-        if (debugLiveUpdate)
+        if (GameController.Instance.IsPlotting)
         {
-            setInitialPositionAndAttitude();
-            PlaceMarkers();
+            ApplyPlotting();
         }
     }
 
@@ -153,4 +160,35 @@ public class Ship : MonoBehaviour
         Attitude = marker.Attitude;
         marker.Visible = false;
     }
+
+    public void PlotThrust(int thr)
+    {
+        Plotting.Thrust = Mathf.Min(thr, Stats.MaxThrust);
+    }
+
+    public void PlotPivot(Pivot p)
+    {
+        if (Plotting.Pivots.Count < Stats.MaxPivots)
+        {
+            if (Plotting.IsDiagonal(p) && !Plotting.CanPivotOnDiagonals) return;
+
+            Plotting.Pivots.Add(p);
+        }
+    }
+
+    public void PlotRoll(Roll r)
+    {
+        if (Plotting.Rolls.Count < Stats.MaxRolls)
+        {
+            Plotting.Rolls.Add(r);
+        }
+    }
+}
+
+[Serializable]
+public struct ShipStats
+{
+    public int MaxPivots;
+    public int MaxRolls;
+    public int MaxThrust;
 }
