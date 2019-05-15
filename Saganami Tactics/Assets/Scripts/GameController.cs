@@ -61,8 +61,6 @@ public class GameController : MonoBehaviour
             s.MarkersDisplayMode = s.Side == LocalPlayerSide ? Marker.DisplayMode.Ghost : Marker.DisplayMode.Dot;
 
             ships.Add(s.ID, s);
-
-            if (SelectedShip == null) SelectedShip = s;
         }
     }
 

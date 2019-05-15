@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(LineRenderer))]
-public class Ship : MonoBehaviour
+public class Ship : MonoBehaviour, IPointerClickHandler
 {
     public Guid ID;
     public Side Side;
@@ -182,6 +183,11 @@ public class Ship : MonoBehaviour
         {
             Plotting.Rolls.Add(r);
         }
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        GameController.Instance.SelectedShip = this;
     }
 }
 

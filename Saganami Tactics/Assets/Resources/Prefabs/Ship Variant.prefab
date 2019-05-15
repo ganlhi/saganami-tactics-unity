@@ -108,18 +108,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Side: 0
   Name: 
+  Stats:
+    MaxPivots: 0
+    MaxRolls: 0
+    MaxThrust: 0
   Position: {x: 0, y: 0, z: 0}
   Velocity: {x: 0, y: 0, z: 0}
-  Acceleration: {x: 0, y: 0, z: 0}
   Attitude:
     Yaw: 0
     Pitch: 0
     Roll: 0
-  IsMoving: 0
+  Plotting:
+    Pivots: 
+    Rolls: 
+    Thrust: 0
   MarkersDisplayMode: 0
   markerPrefab: {fileID: 1993261341234381014, guid: 244e685f329b26441b9310db4dabde4a,
     type: 3}
-  debugLiveUpdate: 0
 --- !u!1001 &3512700371054593566
 PrefabInstance:
   m_ObjectHideFlags: 0

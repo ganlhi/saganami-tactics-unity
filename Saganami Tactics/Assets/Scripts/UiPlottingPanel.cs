@@ -44,7 +44,7 @@ public class UiPlottingPanel : MonoBehaviour
 
     private void Update()
     {
-        var visible = ctrl.IsPlotting && ctrl.SelectedShip != null;
+        var visible = ctrl.IsPlotting && ctrl.SelectedShip != null && ctrl.SelectedShip.Side == ctrl.LocalPlayerSide;
         GetComponent<Image>().enabled = visible;
         foreach (Transform child in transform)
         {
