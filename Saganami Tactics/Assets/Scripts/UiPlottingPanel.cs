@@ -64,6 +64,7 @@ public class UiPlottingPanel : MonoBehaviour
         thrustCounter.text = string.Format("{0}", ctrl.SelectedShip.Plotting.Thrust);
 
         thrustSlider.maxValue = ctrl.SelectedShip.Stats.MaxThrust;
+        thrustSlider.value = ctrl.SelectedShip.Plotting.Thrust;
 
         foreach (var btn in diagonalButtons)
         {

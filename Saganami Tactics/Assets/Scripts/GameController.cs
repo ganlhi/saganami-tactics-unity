@@ -21,6 +21,7 @@ public class GameController : MonoBehaviour
 
 #pragma warning disable 0649
     [SerializeField] GameObject shipPrefab;
+    [SerializeField] GameState initialState;
 #pragma warning restore
 
     private Dictionary<Side, Vector3> sidesDeploymentOrigins = new Dictionary<Side, Vector3>()
@@ -49,33 +50,29 @@ public class GameController : MonoBehaviour
     }
     private void Start()
     {
-        // DEBUG
-        var existingShips = GameObject.FindObjectsOfType<Ship>();
-        foreach (Ship s in existingShips)
-        {
-            if (s.ID == null)
-            {
-                s.ID = Guid.NewGuid();
-            }
-
-            s.MarkersDisplayMode = s.Side == LocalPlayerSide ? Marker.DisplayMode.Ghost : Marker.DisplayMode.Dot;
-
-            ships.Add(s.ID, s);
-        }
+        loadInitialState();
     }
 
-    public Ship AddShip(Side side, string name, ShipStats stats)
+    private void loadInitialState()
     {
-        var ship = GameObject.Instantiate(shipPrefab).GetComponent<Ship>();
-        ship.Side = side;
-        ship.Name = name;
-        ship.Stats = stats;
-        ship.MarkersDisplayMode = LocalPlayerSide == side ? Marker.DisplayMode.Ghost : Marker.DisplayMode.Dot;
-        ship.ID = Guid.NewGuid();
-        ship.Position = sidesDeploymentOrigins[side];
+        if (initialState == null) return;
 
-        ships.Add(ship.ID, ship);
-        return ship;
+        foreach (ShipState s in initialState.Ships)
+        {
+            var ship = GameObject.Instantiate(shipPrefab).GetComponent<Ship>();
+            ship.ID = Guid.NewGuid();
+
+            ship.Side = s.Side;
+            ship.Name = s.Name;
+            ship.Stats = s.Stats;
+            ship.Position = s.Position;
+            ship.Velocity = s.Velocity;
+            ship.Attitude = s.Attitude;
+
+            ship.MarkersDisplayMode = LocalPlayerSide == s.Side ? Marker.DisplayMode.Ghost : Marker.DisplayMode.Dot;
+
+            ships.Add(ship.ID, ship);
+        }
     }
 
     public void NextStep()

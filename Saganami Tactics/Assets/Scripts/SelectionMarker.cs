@@ -5,14 +5,11 @@ using TMPro;
 
 public class SelectionMarker : MonoBehaviour
 {
-    [SerializeField]
-    private Image markerImage;
-
-    [SerializeField]
-    private TMP_Text markerText;
-
-    [SerializeField]
-    private int padding;
+#pragma warning disable 0649
+    [SerializeField] private Image markerImage;
+    [SerializeField] private TMP_Text markerText;
+    [SerializeField] private int padding;
+#pragma warning restore
 
     private void Update()
     {

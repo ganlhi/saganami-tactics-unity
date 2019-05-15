@@ -125,6 +125,19 @@ MonoBehaviour:
   MarkersDisplayMode: 0
   markerPrefab: {fileID: 1993261341234381014, guid: 244e685f329b26441b9310db4dabde4a,
     type: 3}
+--- !u!65 &8281744934212491872
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5546890814935118649}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.4, y: 0.4, z: 0.8}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &3512700371054593566
 PrefabInstance:
   m_ObjectHideFlags: 0

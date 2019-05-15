@@ -409,105 +409,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 108638771}
   m_CullTransparentMesh: 0
---- !u!1001 &116184078
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 5546890814935118649, guid: 241eb83a84580324a959883e249dc6e7,
-        type: 3}
-      propertyPath: m_Name
-      value: Ship Variant
-      objectReference: {fileID: 0}
-    - target: {fileID: 2759494453291257524, guid: 241eb83a84580324a959883e249dc6e7,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2759494453291257524, guid: 241eb83a84580324a959883e249dc6e7,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2759494453291257524, guid: 241eb83a84580324a959883e249dc6e7,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2759494453291257524, guid: 241eb83a84580324a959883e249dc6e7,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2759494453291257524, guid: 241eb83a84580324a959883e249dc6e7,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2759494453291257524, guid: 241eb83a84580324a959883e249dc6e7,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2759494453291257524, guid: 241eb83a84580324a959883e249dc6e7,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2759494453291257524, guid: 241eb83a84580324a959883e249dc6e7,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 2759494453291257524, guid: 241eb83a84580324a959883e249dc6e7,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2759494453291257524, guid: 241eb83a84580324a959883e249dc6e7,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2759494453291257524, guid: 241eb83a84580324a959883e249dc6e7,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8954596071066187048, guid: 241eb83a84580324a959883e249dc6e7,
-        type: 3}
-      propertyPath: Name
-      value: Toto
-      objectReference: {fileID: 0}
-    - target: {fileID: 8954596071066187048, guid: 241eb83a84580324a959883e249dc6e7,
-        type: 3}
-      propertyPath: debugLiveUpdate
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8954596071066187048, guid: 241eb83a84580324a959883e249dc6e7,
-        type: 3}
-      propertyPath: Velocity.z
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 8954596071066187048, guid: 241eb83a84580324a959883e249dc6e7,
-        type: 3}
-      propertyPath: Stats.MaxPivots
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 8954596071066187048, guid: 241eb83a84580324a959883e249dc6e7,
-        type: 3}
-      propertyPath: Stats.MaxRolls
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 8954596071066187048, guid: 241eb83a84580324a959883e249dc6e7,
-        type: 3}
-      propertyPath: Stats.MaxThrust
-      value: 3
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 241eb83a84580324a959883e249dc6e7, type: 3}
 --- !u!1 &126234064
 GameObject:
   m_ObjectHideFlags: 0
@@ -1698,25 +1599,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 537357606}
   m_CullTransparentMesh: 0
---- !u!1 &556744348 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5546890814935118649, guid: 241eb83a84580324a959883e249dc6e7,
-    type: 3}
-  m_PrefabInstance: {fileID: 116184078}
-  m_PrefabAsset: {fileID: 0}
---- !u!65 &556744349
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 556744348}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.4, y: 0.4, z: 0.8}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &575612025
 GameObject:
   m_ObjectHideFlags: 0
@@ -2118,6 +2000,7 @@ MonoBehaviour:
   CanGoNextStep: 1
   shipPrefab: {fileID: 5546890814935118649, guid: 241eb83a84580324a959883e249dc6e7,
     type: 3}
+  initialState: {fileID: 11400000, guid: 20b7b074f24d9744a8de810c508d6044, type: 2}
 --- !u!4 &654758114
 Transform:
   m_ObjectHideFlags: 0
