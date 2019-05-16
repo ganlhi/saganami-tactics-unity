@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class MouseInputManager : InputManager
 {
@@ -10,7 +9,9 @@ public class MouseInputManager : InputManager
     Vector2Int screen;
     Vector2? previousMousePosition;
 
+#pragma warning disable 0067
     public static event MoveInputHandler OnMoveInput;
+#pragma warning restore
     public static event RotateInputHandler OnRotateInput;
     public static event ZoomInputHandler OnZoomInput;
 
