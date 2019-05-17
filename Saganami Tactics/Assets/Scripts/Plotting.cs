@@ -42,7 +42,7 @@ public struct Plotting
         }
     }
 
-    public int Displacement { get { return Rolls.Count > 0 ? 0 : Thrust / 2; } }
+    public int Displacement { get { return Pivots.Count > 0 ? 0 : Thrust / 2; } }
 
     public bool CanPivotOnDiagonals
     {
