@@ -22,7 +22,6 @@ public class GameController : MonoBehaviourPunCallbacks
     public bool IsPlotting => Started && Step == Step.Plotting;
 
 #pragma warning disable 0649
-    [SerializeField] GameObject shipPrefab;
     [SerializeField] GameState initialState;
 #pragma warning restore
 
@@ -58,11 +57,11 @@ public class GameController : MonoBehaviourPunCallbacks
     }
     private void Start()
     {
-        if (PhotonNetwork.InRoom)
+        if (PhotonNetwork.IsMasterClient)
         {
             loadInitialState();
         }
-        else
+        else if (!PhotonNetwork.InRoom)
         {
             SceneManager.LoadScene("Menu");
         }
@@ -74,7 +73,7 @@ public class GameController : MonoBehaviourPunCallbacks
 
         foreach (ShipState s in initialState.Ships)
         {
-            var ship = GameObject.Instantiate(shipPrefab).GetComponent<Ship>();
+            var ship = PhotonNetwork.Instantiate("Prefabs/Ship", Vector3.zero, Quaternion.identity).GetComponent<Ship>();
             ship.ID = Guid.NewGuid();
 
             ship.Side = s.Side;
