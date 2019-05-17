@@ -6,12 +6,19 @@ public class MenuController : MonoBehaviourPunCallbacks
 {
     GameObject menu;
 
-    private void Start()
+    private void Awake()
     {
         menu = GameObject.Find("Menu");
-        menu.SetActive(false);
 
-        PhotonNetwork.ConnectUsingSettings();
+        PhotonNetwork.AutomaticallySyncScene = true;
+    }
+    private void Start()
+    {
+        if (!PhotonNetwork.IsConnected)
+        {
+            PhotonNetwork.ConnectUsingSettings();
+            menu.SetActive(false);
+        }
     }
 
     public void CreateGame()
