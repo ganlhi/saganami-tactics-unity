@@ -1,9 +1,11 @@
-﻿using System;
+﻿using Photon.Pun;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class GameController : MonoBehaviour
+public class GameController : MonoBehaviourPunCallbacks
 {
     public static GameController Instance;
 
@@ -24,6 +26,8 @@ public class GameController : MonoBehaviour
     [SerializeField] GameState initialState;
 #pragma warning restore
 
+    // TODO move to SetupController
+    /*
     private Dictionary<Side, Vector3> sidesDeploymentOrigins = new Dictionary<Side, Vector3>()
     {
         { Side.Red, new Vector3(25, 0, 0) },
@@ -31,8 +35,12 @@ public class GameController : MonoBehaviour
         { Side.Yellow, new Vector3(0, 0, 25) },
         { Side.Green, new Vector3(0, 0, -25) },
     };
+    */
 
     private Dictionary<Guid, Ship> ships;
+
+    #region Startup
+
     private void Awake()
     {
         if (Instance != null)
@@ -50,7 +58,14 @@ public class GameController : MonoBehaviour
     }
     private void Start()
     {
-        loadInitialState();
+        if (PhotonNetwork.InRoom)
+        {
+            loadInitialState();
+        }
+        else
+        {
+            SceneManager.LoadScene("Menu");
+        }
     }
 
     private void loadInitialState()
@@ -74,6 +89,10 @@ public class GameController : MonoBehaviour
             ships.Add(ship.ID, ship);
         }
     }
+
+    #endregion
+
+    #region Steps
 
     public void NextStep()
     {
@@ -156,4 +175,12 @@ public class GameController : MonoBehaviour
     {
         Ships.ForEach(s => s.MoveToNextMarker());
     }
+
+    #endregion
+
+    #region Network
+
+
+
+    #endregion
 }
