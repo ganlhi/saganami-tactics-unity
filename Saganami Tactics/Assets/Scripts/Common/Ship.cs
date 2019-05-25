@@ -21,13 +21,10 @@ namespace ST
 
         #region Public variables
 
-        //TODO replace with ShipStats
-        //public ShipSSD SSD { get; private set; }
-
-
         public string Name;
         public Vector3 Velocity = Vector3.zero;
         public Vector3 Thrust = Vector3.zero;
+        public ShipStats Stats;
 
         private int middleMarkerViewId = -1;
         private ShipMarker middleMarker;
@@ -67,67 +64,15 @@ namespace ST
 
         public bool IsMoving { get; private set; }
 
-        public ReadOnlyCollection<Quaternion> PlottedPivots
-        {
-            get
-            {
-                return plottedPivots.AsReadOnly();
-            }
-        }
+        public ReadOnlyCollection<Quaternion> PlottedPivots => plottedPivots.AsReadOnly();
 
-        public ReadOnlyCollection<Quaternion> PlottedRolls
-        {
-            get
-            {
-                return plottedRolls.AsReadOnly();
-            }
-        }
+        public ReadOnlyCollection<Quaternion> PlottedRolls => plottedRolls.AsReadOnly();
 
-        public int MaxThrust
-        {
-            get
-            {
-                return 3;
-                //TODO replace with ShipStats
-                //return SSD.InternalSystems.MaxThrust[0].y; // TODO take damages into account
-            }
-        }
-
-        public int MaxPivots
-        {
-            get
-            {
-                return 6;
-                //TODO replace with ShipStats
-                //return SSD.InternalSystems.Pivot[0]; // TODO take damages into account
-            }
-        }
-
-        public int MaxRolls
-        {
-            get
-            {
-                return 6;
-                //TODO replace with ShipStats
-                //return SSD.InternalSystems.Roll[0]; // TODO take damages into account
-            }
-        }
-
-        public int UsedPivots
-        {
-            get
-            {
-                return plottedPivots.Count;
-            }
-        }
-
-        public int UsedRolls
-        {
-            get
-            {
-                return plottedRolls.Count;
-            }
-        }
+        public int MaxThrust => Stats.MaxThrust;
+        public int MaxPivots => Stats.MaxPivots;
+        public int MaxRolls => Stats.MaxRolls;
+        public int UsedPivots => plottedPivots.Count;
+        public int UsedRolls => plottedRolls.Count;
 
         #endregion Public variables
 

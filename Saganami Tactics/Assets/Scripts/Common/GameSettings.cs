@@ -13,8 +13,7 @@ namespace ST
         public static readonly string SceneLauncher = "Launcher";
         public static readonly string SceneInRoom = "InRoom";
         public static readonly string SceneSetup = "Setup";
-        public static readonly string SceneDeploy = "Deploy";
-        public static readonly string ScenePlay = "Play";
+        public static readonly string SceneGame = "Game";
         #endregion
 
 
@@ -29,20 +28,6 @@ namespace ST
                 case 3: return Color.yellow;
                 default: return Color.white;
             }
-        }
-
-        public static Vector3 GetDeploymentCenterPoint(int colorIndex)
-        {
-            // TODO remake this
-            return new Vector3(-30, 0, 0);
-            //switch (colorIndex)
-            //{
-            //    case 0: return new Vector3(-30, 0, 0);
-            //    case 1: return new Vector3(30, 0, 0);
-            //    case 2: return new Vector3(0, 0, -30);
-            //    case 3: return new Vector3(0, 0, 30);
-            //    default: return Vector3.zero;
-            //}
         }
         #endregion
     }

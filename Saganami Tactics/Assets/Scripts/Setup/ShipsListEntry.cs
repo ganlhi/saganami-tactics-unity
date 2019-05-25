@@ -7,7 +7,7 @@ namespace ST
 {
     public class ShipsListEntry : MonoBehaviour
     {
-        public Ship Ship;
+        public ShipDeploy Ship;
 
 #pragma warning disable 0649
         [SerializeField] private TMP_Text shipName;
@@ -18,7 +18,7 @@ namespace ST
 
         private void Start()
         {
-            shipName.text = Ship.Name;
+            shipName.text = Ship.State.Name;
         }
     }
 }
