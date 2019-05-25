@@ -1,14 +1,22 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.EventSystems;
 
 namespace ST
 {
-    public class ShipDeploy : MonoBehaviour
+    public class ShipDeploy : MonoBehaviour, IPointerClickHandler
     {
         public ShipState State;
+        public ShipDeploySelectEvent OnSelect = new ShipDeploySelectEvent();
 
         LineRenderer lineRenderer;
+
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            OnSelect.Invoke(this);
+        }
 
         private void Awake()
         {
@@ -35,4 +43,7 @@ namespace ST
             lineRenderer.SetPosition(1, State.Position + State.Velocity);
         }
     }
+
+    [System.Serializable]
+    public class ShipDeploySelectEvent : UnityEvent<ShipDeploy> { }
 }

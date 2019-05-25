@@ -147,6 +147,7 @@ namespace ST
         };
 
 #pragma warning disable 0649
+        [SerializeField] private Transform controlPanel;
         [SerializeField] private Transform playerShipsListContent;
         [SerializeField] private GameObject shipsListEntryPrefab;
         [SerializeField] private Button readyButton;
@@ -160,22 +161,25 @@ namespace ST
         [SerializeField] private Transform yellowDeploymentZone;
 #pragma warning restore
 
+        public ShipDeploy SelectedShip;
         private Dictionary<Vector3, ShipDeploy> positionnedShips = new Dictionary<Vector3, ShipDeploy>();
+
+        #region Unity callbacks
 
         private void Start()
         {
             readyButton.onClick.AddListener(SetReady);
         }
 
-        private void SetReady()
-        {
-            PhotonNetwork.LocalPlayer.SetReady();
-        }
-
         private void FixedUpdate()
         {
             readyButton.gameObject.SetActive(positionnedShips.Count > 0);
+            controlPanel.gameObject.SetActive(SelectedShip != null);
         }
+
+        #endregion
+
+        #region Photon callbacks
 
         public override void OnPlayerPropertiesUpdate(Player player, Hashtable changedProps)
         {
@@ -184,6 +188,15 @@ namespace ST
             waitingCanvas.gameObject.SetActive(ready);
 
             UpdateNbReady();
+        }
+
+        #endregion
+
+        #region Readiness
+
+        private void SetReady()
+        {
+            PhotonNetwork.LocalPlayer.SetReady();
         }
 
         private void UpdateNbReady()
@@ -201,6 +214,9 @@ namespace ST
             }
         }
 
+        #endregion
+
+        #region Ships creation
         public void AddShip(string shipName)
         {
             // Create the ship
@@ -216,6 +232,7 @@ namespace ST
                 Velocity = Vector3.zero,
                 Stats = new ShipStats(),
             };
+            ship.OnSelect.AddListener((s) => { SelectedShip = s; });
             PlaceShip(ship);
 
             var entry = Instantiate(shipsListEntryPrefab).GetComponent<ShipsListEntry>();
@@ -227,37 +244,31 @@ namespace ST
                 Destroy(ship.gameObject);
             });
             entry.transform.SetParent(playerShipsListContent);
+        }
 
+        private Transform getShipDeploymentZone()
+        {
+            switch (PhotonNetwork.LocalPlayer.GetColorIndex())
+            {
+                case 0:
+                    return redDeploymentZone;
+                case 1:
+                    return blueDeploymentZone;
+                case 2:
+                    return greenDeploymentZone;
+                case 3:
+                    return yellowDeploymentZone;
+                default:
+                    throw new System.Exception("Bad color index");
+            }
         }
 
         private void PlaceShip(ShipDeploy ship)
         {
-            Vector3 deployPoint;
-            Quaternion offsetRotation;
+            var dz = getShipDeploymentZone();
 
-            switch (PhotonNetwork.LocalPlayer.GetColorIndex())
-            {
-                case 0:
-                    deployPoint = redDeploymentZone.position;
-                    offsetRotation = redDeploymentZone.rotation;
-                    break;
-                case 1:
-                    deployPoint = blueDeploymentZone.position;
-                    offsetRotation = blueDeploymentZone.rotation;
-                    break;
-                case 2:
-                    deployPoint = greenDeploymentZone.position;
-                    offsetRotation = greenDeploymentZone.rotation;
-                    break;
-                case 3:
-                    deployPoint = yellowDeploymentZone.position;
-                    offsetRotation = yellowDeploymentZone.rotation;
-                    break;
-                default:
-                    Debug.LogError("Bad color index");
-                    Destroy(ship.gameObject);
-                    return;
-            }
+            Vector3 deployPoint = dz.position;
+            Quaternion offsetRotation = dz.rotation;
 
             var occupied = true;
             Vector3 point = deployPoint;
@@ -301,5 +312,153 @@ namespace ST
 
             positionnedShips.Add(point, ship);
         }
+
+        #endregion
+
+        #region Ships movement
+
+        private Vector3 getPointForward()
+        {
+            if (SelectedShip == null) return Vector3.zero;
+
+            var dz = getShipDeploymentZone();
+            return dz.forward + SelectedShip.State.Position;
+        }
+        private Vector3 getPointBackward()
+        {
+            if (SelectedShip == null) return Vector3.zero;
+
+            var dz = getShipDeploymentZone();
+            return -dz.forward + SelectedShip.State.Position;
+        }
+        private Vector3 getPointLeft()
+        {
+            if (SelectedShip == null) return Vector3.zero;
+
+            var dz = getShipDeploymentZone();
+            return -dz.right + SelectedShip.State.Position;
+        }
+        private Vector3 getPointRight()
+        {
+            if (SelectedShip == null) return Vector3.zero;
+
+            var dz = getShipDeploymentZone();
+            return dz.right + SelectedShip.State.Position;
+        }
+        private Vector3 getPointUp()
+        {
+            if (SelectedShip == null) return Vector3.zero;
+
+            return Vector3.up + SelectedShip.State.Position;
+        }
+        private Vector3 getPointDown()
+        {
+            if (SelectedShip == null) return Vector3.zero;
+
+            return Vector3.down + SelectedShip.State.Position;
+        }
+
+        public bool CanGoForward()
+        {
+            if (SelectedShip == null) return false;
+            var point = getPointForward();
+            var dz = getShipDeploymentZone();
+            return !positionnedShips.ContainsKey(point) && Vector3.Project(point - dz.position, dz.forward).magnitude <= 5;
+        }
+        public bool CanGoBackward()
+        {
+            if (SelectedShip == null) return false;
+            var point = getPointBackward();
+            var dz = getShipDeploymentZone();
+            return !positionnedShips.ContainsKey(point) && Vector3.Project(point - dz.position, -dz.forward).magnitude <= 5;
+        }
+        public bool CanGoLeft()
+        {
+            if (SelectedShip == null) return false;
+            var point = getPointLeft();
+            var dz = getShipDeploymentZone();
+            return !positionnedShips.ContainsKey(point) && Vector3.Project(point - dz.position, -dz.right).magnitude <= 5;
+        }
+        public bool CanGoRight()
+        {
+            if (SelectedShip == null) return false;
+            var point = getPointRight();
+            var dz = getShipDeploymentZone();
+            return !positionnedShips.ContainsKey(point) && Vector3.Project(point - dz.position, dz.right).magnitude <= 5;
+        }
+        public bool CanGoUp()
+        {
+            if (SelectedShip == null) return false;
+            var point = getPointUp();
+            return !positionnedShips.ContainsKey(point) && point.y <= 5;
+        }
+        public bool CanGoDown()
+        {
+            if (SelectedShip == null) return false;
+            var point = getPointDown();
+            return !positionnedShips.ContainsKey(point) && point.y >= 0;
+        }
+
+        public void MoveForward()
+        {
+            if (CanGoForward())
+            {
+                positionnedShips.Remove(SelectedShip.State.Position);
+                SelectedShip.State.Position = getPointForward();
+                positionnedShips.Add(SelectedShip.State.Position, SelectedShip);
+            }
+        }
+
+        public void MoveBackward()
+        {
+            if (CanGoBackward())
+            {
+                positionnedShips.Remove(SelectedShip.State.Position);
+                SelectedShip.State.Position = getPointBackward();
+                positionnedShips.Add(SelectedShip.State.Position, SelectedShip);
+            }
+        }
+
+        public void MoveLeft()
+        {
+            if (CanGoLeft())
+            {
+                positionnedShips.Remove(SelectedShip.State.Position);
+                SelectedShip.State.Position = getPointLeft();
+                positionnedShips.Add(SelectedShip.State.Position, SelectedShip);
+            }
+        }
+
+        public void MoveRight()
+        {
+            if (CanGoRight())
+            {
+                positionnedShips.Remove(SelectedShip.State.Position);
+                SelectedShip.State.Position = getPointRight();
+                positionnedShips.Add(SelectedShip.State.Position, SelectedShip);
+            }
+        }
+
+        public void MoveUp()
+        {
+            if (CanGoUp())
+            {
+                positionnedShips.Remove(SelectedShip.State.Position);
+                SelectedShip.State.Position = getPointUp();
+                positionnedShips.Add(SelectedShip.State.Position, SelectedShip);
+            }
+        }
+
+        public void MoveDown()
+        {
+            if (CanGoDown())
+            {
+                positionnedShips.Remove(SelectedShip.State.Position);
+                SelectedShip.State.Position = getPointDown();
+                positionnedShips.Add(SelectedShip.State.Position, SelectedShip);
+            }
+        }
+
+        #endregion
     }
 }
