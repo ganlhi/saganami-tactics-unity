@@ -309,24 +309,7 @@ namespace ST
             }
 
             ship.State.Position = point;
-
-            if (dz.forward == Vector3.forward)
-            {
-                ship.State.Attitude = new Attitude();
-            }
-            else if (dz.forward == Vector3.back)
-            {
-                ship.State.Attitude = new Attitude { Yaw = 180 };
-            }
-            else if (dz.forward == Vector3.left)
-            {
-                ship.State.Attitude = new Attitude { Yaw = -90 };
-            }
-            else if (dz.forward == Vector3.right)
-            {
-                ship.State.Attitude = new Attitude { Yaw = 90 };
-            }
-
+            attitudeReset(ship);
 
             positionnedShips.Add(point, ship);
         }
@@ -481,6 +464,35 @@ namespace ST
 
         #region Ships attitude
 
+        public void AttitudeReset()
+        {
+            attitudeReset(SelectedShip);
+        }
+
+        private void attitudeReset(ShipDeploy ship)
+        {
+            if (ship == null) return;
+
+            var dz = getShipDeploymentZone();
+
+            if (dz.forward == Vector3.forward)
+            {
+                ship.State.Attitude = new Attitude();
+            }
+            else if (dz.forward == Vector3.back)
+            {
+                ship.State.Attitude = new Attitude { Yaw = 180 };
+            }
+            else if (dz.forward == Vector3.left)
+            {
+                ship.State.Attitude = new Attitude { Yaw = -90 };
+            }
+            else if (dz.forward == Vector3.right)
+            {
+                ship.State.Attitude = new Attitude { Yaw = 90 };
+            }
+        }
+
         public void PitchUp()
         {
             if (SelectedShip == null) return;
@@ -526,6 +538,12 @@ namespace ST
         #endregion
 
         #region Ships velocity
+
+        public void VelocityReset()
+        {
+            if (SelectedShip == null) return;
+            SelectedShip.State.Velocity = Vector3.zero;
+        }
 
         public void VelocityForward()
         {
