@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3285262233714996487}
   - component: {fileID: 3234392858711749870}
   - component: {fileID: 5198301369171441841}
+  - component: {fileID: 8145499705137494829}
   m_Layer: 0
   m_Name: ShipDeploy
   m_TagString: Untagged
@@ -55,7 +56,11 @@ MonoBehaviour:
       MaxRolls: 0
       MaxThrust: 0
     OwnerColorIndex: 0
-  velocityMarker: {fileID: 0}
+  OnSelect:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: ST.ShipDeploySelectEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
 --- !u!120 &5198301369171441841
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -151,6 +156,19 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 1
   m_Loop: 0
+--- !u!65 &8145499705137494829
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3285262233714996486}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.12, y: 0.1, z: 0.27}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &3285262232065834299
 PrefabInstance:
   m_ObjectHideFlags: 0

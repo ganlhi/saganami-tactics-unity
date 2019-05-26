@@ -159,6 +159,7 @@ namespace ST
         [SerializeField] private Transform blueDeploymentZone;
         [SerializeField] private Transform greenDeploymentZone;
         [SerializeField] private Transform yellowDeploymentZone;
+        [SerializeField] private SelectionMarker selectionMarker;
 #pragma warning restore
 
         public ShipDeploy SelectedShip;
@@ -175,6 +176,12 @@ namespace ST
         {
             readyButton.gameObject.SetActive(positionnedShips.Count > 0);
             controlPanel.gameObject.SetActive(SelectedShip != null);
+
+            if (SelectedShip != null)
+            {
+                selectionMarker.SelectedObject = SelectedShip.gameObject;
+                selectionMarker.SelectedObjectName = SelectedShip.State.Name;
+            }
         }
 
         #endregion

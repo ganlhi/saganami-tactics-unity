@@ -8,7 +8,7 @@ namespace ST
     {
         #region Editor customization
 #pragma warning disable 0649
-        [SerializeField] private Image markerImage;
+        [SerializeField] private GameObject markerImages;
         [SerializeField] private TMP_Text markerText;
         [SerializeField] private int padding;
 #pragma warning restore
@@ -16,17 +16,20 @@ namespace ST
 
         #region Unity callbacks
 
+        public GameObject SelectedObject;
+        public string SelectedObjectName;
+
         private void Update()
         {
-            if (PlayController.Instance.SelectedShip != null)
+            if (SelectedObject != null)
             {
-                markerImage.enabled = true;
+                markerImages.SetActive(true);
                 markerText.enabled = true;
 
-                markerText.text = PlayController.Instance.SelectedShip.Name;
+                markerText.text = SelectedObjectName;
 
                 Vector3[] corners = new Vector3[8];
-                var bounds = PlayController.Instance.SelectedShip.GetComponent<Collider>().bounds;
+                var bounds = SelectedObject.GetComponent<Collider>().bounds;
                 var cam = Camera.main;
 
                 var cx = bounds.center.x;
@@ -72,6 +75,20 @@ namespace ST
 
                 Rect visualRect = Rect.MinMaxRect(min_x - padding, min_y - padding, max_x + padding, max_y + padding);
 
+                if (visualRect.width < 80)
+                {
+                    var diff = 80 - visualRect.width;
+                    visualRect.xMin -= diff / 2;
+                    visualRect.xMax += diff / 2;
+                }
+
+                if (visualRect.height < 80)
+                {
+                    var diff = 80 - visualRect.height;
+                    visualRect.yMin -= diff / 2;
+                    visualRect.yMax += diff / 2;
+                }
+
                 RectTransform rt = GetComponent<RectTransform>();
 
                 rt.position = new Vector2(visualRect.xMin, visualRect.yMin);
@@ -79,7 +96,7 @@ namespace ST
             }
             else
             {
-                markerImage.enabled = false;
+                markerImages.SetActive(false);
                 markerText.enabled = false;
             }
         }
