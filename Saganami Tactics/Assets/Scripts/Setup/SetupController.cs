@@ -524,5 +524,52 @@ namespace ST
         }
 
         #endregion
+
+        #region Ships velocity
+
+        public void VelocityForward()
+        {
+            if (SelectedShip == null) return;
+            var dz = getShipDeploymentZone();
+            var vel = SelectedShip.State.Velocity + dz.forward;
+            if (vel.magnitude <= 5) SelectedShip.State.Velocity = vel;
+        }
+        public void VelocityBackward()
+        {
+            if (SelectedShip == null) return;
+            var dz = getShipDeploymentZone();
+            var vel = SelectedShip.State.Velocity - dz.forward;
+            if (vel.magnitude <= 5) SelectedShip.State.Velocity = vel;
+        }
+        public void VelocityLeft()
+        {
+            if (SelectedShip == null) return;
+            var dz = getShipDeploymentZone();
+            var vel = SelectedShip.State.Velocity - dz.right;
+            if (vel.magnitude <= 5) SelectedShip.State.Velocity = vel;
+        }
+        public void VelocityRight()
+        {
+            if (SelectedShip == null) return;
+            var dz = getShipDeploymentZone();
+            var vel = SelectedShip.State.Velocity + dz.right;
+            if (vel.magnitude <= 5) SelectedShip.State.Velocity = vel;
+        }
+        public void VelocityUp()
+        {
+            if (SelectedShip == null) return;
+            var dz = getShipDeploymentZone();
+            var vel = SelectedShip.State.Velocity + dz.up;
+            if (vel.magnitude <= 5) SelectedShip.State.Velocity = vel;
+        }
+        public void VelocityDown()
+        {
+            if (SelectedShip == null) return;
+            var dz = getShipDeploymentZone();
+            var vel = SelectedShip.State.Velocity - dz.up;
+            if (vel.magnitude <= 5) SelectedShip.State.Velocity = vel;
+        }
+
+        #endregion
     }
 }
