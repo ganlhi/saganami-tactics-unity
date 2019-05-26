@@ -14,7 +14,7 @@ public struct ShipState
 {
     public string Name;
     public Vector3 Position;
-    public Quaternion Rotation;
+    public Attitude Attitude;
     public Vector3 Velocity;
     public ShipStats Stats;
     public int OwnerColorIndex;

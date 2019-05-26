@@ -37,7 +37,7 @@ namespace ST
         private void Update()
         {
             transform.position = State.Position;
-            transform.rotation = State.Rotation;
+            transform.rotation = State.Attitude.ToQuaternion();
 
             lineRenderer.SetPosition(0, State.Position);
             lineRenderer.SetPosition(1, State.Position + State.Velocity);

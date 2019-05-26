@@ -233,11 +233,7 @@ namespace ST
             ship.State = new ShipState
             {
                 Name = shipName,
-                OwnerColorIndex = PhotonNetwork.LocalPlayer.GetColorIndex(),
-                Position = Vector3.zero,
-                Rotation = Quaternion.identity,
-                Velocity = Vector3.zero,
-                Stats = new ShipStats(),
+                OwnerColorIndex = PhotonNetwork.LocalPlayer.GetColorIndex()
             };
             ship.OnSelect.AddListener((s) => { SelectedShip = s; });
             PlaceShip(ship);
@@ -312,10 +308,25 @@ namespace ST
                 return;
             }
 
-            var rotation = Quaternion.LookRotation(deployPoint * -1, Vector3.up);
-
             ship.State.Position = point;
-            ship.State.Rotation = rotation;
+
+            if (dz.forward == Vector3.forward)
+            {
+                ship.State.Attitude = new Attitude();
+            }
+            else if (dz.forward == Vector3.back)
+            {
+                ship.State.Attitude = new Attitude { Yaw = 180 };
+            }
+            else if (dz.forward == Vector3.left)
+            {
+                ship.State.Attitude = new Attitude { Yaw = -90 };
+            }
+            else if (dz.forward == Vector3.right)
+            {
+                ship.State.Attitude = new Attitude { Yaw = 90 };
+            }
+
 
             positionnedShips.Add(point, ship);
         }
@@ -464,6 +475,52 @@ namespace ST
                 SelectedShip.State.Position = getPointDown();
                 positionnedShips.Add(SelectedShip.State.Position, SelectedShip);
             }
+        }
+
+        #endregion
+
+        #region Ships attitude
+
+        public void PitchUp()
+        {
+            if (SelectedShip == null) return;
+
+            SelectedShip.State.Attitude += new Attitude { Pitch = 30 };
+        }
+
+        public void PitchDown()
+        {
+            if (SelectedShip == null) return;
+
+            SelectedShip.State.Attitude += new Attitude { Pitch = -30 };
+        }
+
+        public void YawLeft()
+        {
+            if (SelectedShip == null) return;
+
+            SelectedShip.State.Attitude += new Attitude { Yaw = -30 };
+        }
+
+        public void YawRight()
+        {
+            if (SelectedShip == null) return;
+
+            SelectedShip.State.Attitude += new Attitude { Yaw = 30 };
+        }
+
+        public void RollLeft()
+        {
+            if (SelectedShip == null) return;
+
+            SelectedShip.State.Attitude += new Attitude { Roll = -30 };
+        }
+
+        public void RollRight()
+        {
+            if (SelectedShip == null) return;
+
+            SelectedShip.State.Attitude += new Attitude { Roll = 30 };
         }
 
         #endregion
