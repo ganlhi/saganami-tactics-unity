@@ -12,9 +12,11 @@ namespace ST
         [SerializeField]
         private TMPro.TMP_Text textUi;
 
+        [SerializeField] private int multiplier = 1;
+
         private void Update()
         {
-            textUi.text = sliderInput.value.ToString();
+            textUi.text = (sliderInput.value * multiplier).ToString();
         }
     }
 }

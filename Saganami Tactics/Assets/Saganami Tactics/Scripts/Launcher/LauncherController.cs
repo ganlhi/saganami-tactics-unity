@@ -14,6 +14,9 @@ namespace ST
         [SerializeField]
         private GameObject joinPanel;
 
+        [SerializeField]
+        private GameObject connectingMessage;
+
         private void Awake()
         {
             PhotonNetwork.AutomaticallySyncScene = true;
@@ -40,6 +43,7 @@ namespace ST
         public override void OnConnectedToMaster()
         {
             Debug.LogFormat("<color=blue>Connected to master</color> Ready: {0}", PhotonNetwork.IsConnectedAndReady);
+            connectingMessage.SetActive(false);
         }
 
         public static readonly int StartMode = 0;
