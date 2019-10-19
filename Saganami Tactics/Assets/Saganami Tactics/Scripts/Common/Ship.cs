@@ -257,7 +257,7 @@ namespace ST
 
         public List<TargetData> IdentifyTargets(Salvo salvo, Side side)
         {
-            Transform from = salvo == Salvo.Late ? MiddleMarker.transform : transform;
+            var from = salvo == Salvo.Late ? MiddleMarker.transform : transform;
 
             var targets = new List<TargetData>();
 
@@ -269,7 +269,7 @@ namespace ST
                 }
 
                 // Get target transform
-                Transform to = salvo == Salvo.Early
+                var to = salvo == Salvo.Early
                     ? ship.transform
                     : (salvo == Salvo.Middle ? ship.MiddleMarker.transform : ship.EndMarker.transform);
 

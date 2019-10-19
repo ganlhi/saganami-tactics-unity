@@ -120,6 +120,11 @@ namespace ST
 
         private void Start()
         {
+            PlayController.Instance.OnShipSelect.AddListener(UpdateUi);
+        }
+
+        private void OnEnable()
+        {
             UpdateUi();
         }
 

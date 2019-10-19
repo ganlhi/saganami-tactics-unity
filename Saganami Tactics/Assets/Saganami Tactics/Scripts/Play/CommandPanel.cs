@@ -89,21 +89,38 @@ namespace ST
             }
 
             var ship = PlayController.Instance.SelectedShip;
-            if (ship != null && ship.photonView.Owner.IsLocal)
+            if (ship == null || !ship.photonView.Owner.IsLocal) return;
+            
+            switch (PlayController.Instance.Step)
             {
-                switch (PlayController.Instance.Step)
-                {
-                    case TurnStep.Plotting:
-                        plottingPanel.SetActive(true);
-                        break;
-
-                    case TurnStep.SetupSalvos:
-                        targettingPanel.SetActive(true);
-                        break;
-
-                    default:
-                        break;
-                }
+                case TurnStep.Start:
+                    break;
+                case TurnStep.Plotting:
+                    plottingPanel.SetActive(true);
+                    break;
+                case TurnStep.SetupSalvos:
+                    targettingPanel.SetActive(true);
+                    break;
+                case TurnStep.EarlySalvoImpact:
+                    break;
+                case TurnStep.HalfMove:
+                    break;
+                case TurnStep.MiddleSalvoImpact:
+                    break;
+                case TurnStep.FirstBeamImpact:
+                    break;
+                case TurnStep.FullMove:
+                    break;
+                case TurnStep.LateSalvoImpace:
+                    break;
+                case TurnStep.SecondBeamImpact:
+                    break;
+                case TurnStep.DamageControl:
+                    break;
+                case TurnStep.End:
+                    break;
+                default:
+                    break;
             }
         }
 

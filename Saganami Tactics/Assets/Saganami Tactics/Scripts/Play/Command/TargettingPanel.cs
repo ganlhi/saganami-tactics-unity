@@ -20,8 +20,6 @@ namespace ST
 
         #endregion Editor customization
 
-
-
         #region Public methods
 
         public void SetSalvo(int salvo)
