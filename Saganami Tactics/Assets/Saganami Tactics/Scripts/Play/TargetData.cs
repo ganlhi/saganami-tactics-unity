@@ -10,7 +10,7 @@
         public Side? TargetWedge;
         public Side? TargetSideWall;
         public int Distance;
-        public int MQL;
+        public int Mql;
         public int Missiles;
     }
 }

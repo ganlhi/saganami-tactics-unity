@@ -33,7 +33,7 @@ namespace ST
 
         public TargetData Target
         {
-            get { return target; }
+            get => target;
             set
             {
                 target = value;
@@ -47,7 +47,7 @@ namespace ST
 
         public bool Targetting
         {
-            get { return targetting; }
+            get => targetting;
             set
             {
                 targetting = value;

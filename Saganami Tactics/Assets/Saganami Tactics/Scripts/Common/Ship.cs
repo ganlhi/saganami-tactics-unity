@@ -302,7 +302,7 @@ namespace ST
                     Attacker = this,
                     Target = ship,
                     Distance = distance,
-                    MQL = mql.Value,
+                    Mql = mql.Value,
                     Missiles = missiles,
                     Salvo = salvo,
                     AttackingSide = side,
