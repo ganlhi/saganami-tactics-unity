@@ -98,7 +98,7 @@ namespace ST
             flag.sprite = SSD.Faction.Flag;
             factionName.text = SSD.Faction.Name;
             className.text = SSD.ClassName;
-            category.text = string.Format("{0} ({1})", SSD.Category.Name, SSD.Category.Code);
+            category.text = $"{SSD.Category.Name} ({SSD.Category.Code})";
             cost.text = SSD.BaseCost.ToString();
 
             shipNameField.text = null;

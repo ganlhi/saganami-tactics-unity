@@ -103,8 +103,8 @@ namespace ST
                 return;
             }
 
-            pivotUsedText.text = string.Format("{0} / {1}", ship.UsedPivots, ship.MaxPivots);
-            rollUsedText.text = string.Format("{0} / {1}", ship.UsedRolls, ship.MaxRolls);
+            pivotUsedText.text = $"{ship.UsedPivots} / {ship.MaxPivots}";
+            rollUsedText.text = $"{ship.UsedRolls} / {ship.MaxRolls}";
 
             pivotResetButton.interactable = ship.UsedPivots > 0;
             rollResetButton.interactable = ship.UsedRolls > 0;

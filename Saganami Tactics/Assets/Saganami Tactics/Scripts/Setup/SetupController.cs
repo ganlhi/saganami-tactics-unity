@@ -78,7 +78,7 @@ namespace ST
                 .Where(p => p.IsReady())
                 .Count();
 
-            nbReadyText.text = string.Format("{0} / {1} ready", nbReady, PhotonNetwork.CurrentRoom.PlayerCount);
+            nbReadyText.text = $"{nbReady} / {PhotonNetwork.CurrentRoom.PlayerCount} ready";
 
             if (PhotonNetwork.IsMasterClient && nbReady == PhotonNetwork.CurrentRoom.PlayerCount)
             {
@@ -190,9 +190,7 @@ namespace ST
 
         private void UpdateTotalCost()
         {
-            totalCostText.text = string.Format("{0} / {1}",
-                GetPlayerShipsTotalCost(),
-                PhotonNetwork.CurrentRoom.GetMaxPoints());
+            totalCostText.text = $"{GetPlayerShipsTotalCost()} / {PhotonNetwork.CurrentRoom.GetMaxPoints()}";
         }
     }
 }

@@ -78,7 +78,7 @@ namespace ST
             var ship = PlayController.Instance.SelectedShip;
             flag.sprite = ship.SSD.Faction.Flag;
             shipName.text = ship.Name;
-            classAndCategory.text = string.Format("{0} ({1})", ship.SSD.ClassName, ship.SSD.Category.Code);
+            classAndCategory.text = $"{ship.SSD.ClassName} ({ship.SSD.Category.Code})";
         }
 
         private void DisplaySubPanelForStep()

@@ -10,7 +10,7 @@ namespace ST
         {
             if (!typeof(T).IsEnum)
             {
-                throw new ArgumentException(String.Format("Argument {0} is not an Enum", typeof(T).FullName));
+                throw new ArgumentException($"Argument {typeof(T).FullName} is not an Enum");
             }
 
             T[] Arr = (T[])Enum.GetValues(src.GetType());

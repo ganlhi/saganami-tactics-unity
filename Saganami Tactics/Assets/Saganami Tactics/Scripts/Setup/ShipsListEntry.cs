@@ -26,7 +26,7 @@ namespace ST
         private void Start()
         {
             shipName.text = Ship.Name;
-            classAndCategory.text = string.Format("{0} ({1})", Ship.SSD.ClassName, Ship.SSD.Category.Code);
+            classAndCategory.text = $"{Ship.SSD.ClassName} ({Ship.SSD.Category.Code})";
             cost.text = Ship.Cost.ToString();
         }
     }
